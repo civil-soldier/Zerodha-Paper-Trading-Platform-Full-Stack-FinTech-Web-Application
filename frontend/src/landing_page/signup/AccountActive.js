@@ -7,6 +7,7 @@ const AccountActive = () => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
+
   // ✅ ONLY read data, NO redirect logic
   useEffect(() => {
     const storedName = localStorage.getItem("user_name");
@@ -44,9 +45,11 @@ const AccountActive = () => {
         .toUpperCase()
     : "U";
 
-  const handleLogin = () => {
-    window.location.href = "http://localhost:3001/login";
-  };
+const handleLogin = () => {
+  window.location.href = "http://localhost:3001/login";
+};
+
+
 
   return (
     <div className="account-active-wrapper">
