@@ -1,0 +1,125 @@
+  /* ===== BUY ACTION WINDOW (DARK MODE) ===== */
+
+.container {
+  width: 420px;
+  background: linear-gradient(180deg, #1b1f24, #15181c);
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  border-radius: 10px;
+  border: 1px solid #2a2f36;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+  cursor: default;
+}
+
+/* ---------- ORDER SECTION ---------- */
+
+.regular-order {
+  padding: 24px;
+}
+
+/* ---------- INPUTS ---------- */
+
+.inputs {
+  display: flex;
+  gap: 16px;
+}
+
+/* Fieldset wrapper */
+.inputs fieldset {
+  flex: 1;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 6px 10px 10px;
+  background: #0f1318;
+}
+
+/* Legend */
+.inputs fieldset legend {
+  font-size: 0.9rem;
+  color: #ffffff;
+
+}
+
+/* Input box */
+.inputs fieldset input {
+  width: 100%;
+  height: 40px;
+  background: #151a20;
+  border: 1px solid #3a4048;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #ffffff;
+  padding: 0 10px;
+}
+
+/* Focus state */
+.inputs fieldset input:focus {
+  outline: none;
+  border-color: #4184f3;
+  background: #0f1622;
+}
+
+/* ---------- BOTTOM ACTION BAR ---------- */
+
+.buttons {
+  padding: 18px 24px;
+  background: #0e1116;
+  border-top: 1px solid #262c33;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Margin text */
+.buttons span {
+  font-size: 0.9rem;
+  color: #c9d1d9;
+}
+
+.buttons span::before {
+  content: "Margin required ";
+  color: #8b949e;
+}
+
+/* ---------- BUTTONS ---------- */
+
+.btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Buy button */
+.btn-blue {
+  background: #4184f3;
+  color: #ffffff;
+}
+
+.btn-blue:hover {
+  background: #5a96f6;
+  transform: translateY(-1px);
+}
+
+/* Cancel button */
+.btn-grey {
+  background: #2a2f36;
+  color: #9aa4af;
+}
+
+.btn-grey:hover {
+  background: #3a4048;
+  color: #ffffff;
+}
+
+.error-text {
+  color: #ff4d4f;
+  font-size: 12px;
+  margin-left: 6px;
+}
+
