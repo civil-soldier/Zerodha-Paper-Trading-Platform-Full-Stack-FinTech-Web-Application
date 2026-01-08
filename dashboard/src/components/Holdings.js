@@ -55,15 +55,19 @@ const Holdings = () => {
 
             {holdings
             .filter(stock => stock.name && stock.name.trim() !== "")
+            .sort((a, b) => a.name.localeCompare(b.name))
             .map((stock, index) => {
               const curValue = stock.price * stock.qty;
               const invested = stock.avg * stock.qty;
               const stockPnL = curValue - invested;
               const netChange =
                 invested > 0 ? (stockPnL / invested) * 100 : 0;
+              const dayChangeValue = stock.price - stock.avg;
+const dayChangePercent =
+  stock.avg > 0 ? (dayChangeValue / stock.avg) * 100 : 0;
 
               const profClass = stockPnL >= 0 ? "profit" : "loss";
-              const dayClass = stock.isLoss ? "loss" : "profit";
+              const dayClass = dayChangeValue >= 0 ? "profit" : "loss";
 
               return (
                 <tr key={index}>
@@ -74,7 +78,7 @@ const Holdings = () => {
                   <td>{curValue.toFixed(2)}</td>
                   <td className={profClass}>{stockPnL.toFixed(2)}</td>
                   <td className={profClass}>{netChange.toFixed(2)}%</td>
-                  <td className={dayClass}>{stock.day}</td>
+                  <td className={dayClass}>{dayChangePercent.toFixed(2)}%</td>
                 </tr>
               );
             })}

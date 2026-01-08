@@ -18,6 +18,8 @@ import { DoughnutChart } from "./DoughnoutChart";
 const WatchList = () => {
   const [livePrices, setLivePrices] = useState({});
   const [prevPrices, setPrevPrices] = useState({});
+  const [search, setSearch] = useState("");
+
 
 
   // 🔁 Fetch live prices every 1.5s
@@ -75,13 +77,21 @@ const WatchList = () => {
           type="text"
           placeholder="Search eg: infy, bse, nifty fut weekly, gold mcx"
           className="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
         <span className="counts">{watchlist.length} / 50</span>
       </div>
 
       {/* LIST */}
       <ul className="list">
-        {watchlist.map((stock, index) => (
+        {watchlist
+  .filter((stock) =>
+    stock.name.toLowerCase().includes(search.toLowerCase())
+  )
+  .sort((a, b) => a.name.localeCompare(b.name))
+  .map((stock, index) => (
+
           <WatchListItem
             key={index}
             stock={stock}
