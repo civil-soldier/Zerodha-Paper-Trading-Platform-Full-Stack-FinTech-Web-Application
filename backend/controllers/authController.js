@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const sendEmailOtp = require("../utils/sendEmailOtp");
 const sendEmail = require("../utils/sendResetPasswordEmail");
+const { FundsModel } = require("../model/FundsModel");
 console.log("UserModel:", UserModel);
 
 /* =========================
@@ -280,6 +281,23 @@ const login = async (req, res) => {
       { expiresIn: "1d" }
     );
 
+    // 🔥 INIT FUNDS IF NOT EXISTS
+const existingFunds = await FundsModel.findOne({
+  userId: user._id,
+  type: "EQUITY",
+});
+
+if (!existingFunds) {
+  await FundsModel.create({
+    userId: user._id,
+    type: "EQUITY",
+    openingBalance: 50000,
+    availableCash: 50000,
+    usedMargin: 0,
+    availableMargin: 50000,
+  });
+}
+
     res.json({
       success: true,
       token,
@@ -370,6 +388,8 @@ const resetPassword = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
 
 
 module.exports = {

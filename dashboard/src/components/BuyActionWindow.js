@@ -1,6 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../api/axios";
+
 import GeneralContext from "./GeneralContext";
 import "./BuyActionWindow.css";
 import { toast } from "react-toastify";

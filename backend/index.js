@@ -15,11 +15,9 @@ const { FundsModel } = require("./model/FundsModel");
 const { livePrices } = require("./utils/livePrices");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
-const dashboardRoutes = require("./routes/dashboardRoutes");
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 const cleanupExpiredOtps = require("./utils/otpCleanup");
-
 
 const app = express();
 
@@ -32,8 +30,6 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/user", require("./routes/user"));
-app.use("/dashboard", dashboardRoutes);
-
 
 cron.schedule("*/5 * * * *", cleanupExpiredOtps, {
   scheduled: true,
@@ -208,21 +204,23 @@ cron.schedule("*/5 * * * *", cleanupExpiredOtps, {
 // res.send("Done!");
 // })
 
-app.get("/allHoldings", async (req, res) => {
-  let allHoldings = await HoldingsModel.find({});
-  res.json(allHoldings);
+app.get("/allHoldings", authMiddleware, async (req, res) => {
+  const userId = req.user._id;
+  let holdings = await HoldingsModel.find({ userId });
+  res.json(holdings);
 });
 
-app.get("/allPositions", async (req, res) => {
-  let allPositions = await PositionsModel.find({});
-  res.json(allPositions);
+app.get("/allPositions",authMiddleware, async (req, res) => {
+  const userId = req.user._id;
+  let positions = await PositionsModel.find({ userId });
+  res.json(positions);
 });
 
 app.get("/dashboard", authMiddleware, (req, res) => {
   res.json({ message: "Welcome", user: req.user });
 });
 
-app.post("/newOrder", async (req, res) => {
+app.post("/newOrder", authMiddleware, async (req, res) => {
   try {
     let { name, qty, price, mode } = req.body;
 
@@ -251,7 +249,7 @@ app.post("/newOrder", async (req, res) => {
     }
 
     // ================== 🔥 FUNDS FETCH (PASTE HERE) 🔥 ==================
-    const equityFunds = await FundsModel.findOne({ type: "EQUITY" });
+    const equityFunds = await FundsModel.findOne({ userId: req.user._id, type: "EQUITY" });
 
     if (!equityFunds) {
       return res.status(500).json({
@@ -262,7 +260,9 @@ app.post("/newOrder", async (req, res) => {
     // ===================================================================
 
     // ---------- HOLDINGS ----------
-    let holding = await HoldingsModel.findOne({ name });
+    const userId = req.user._id;
+let holding = await HoldingsModel.findOne({ userId, name });
+
 
     // ================== BUY ==================
     if (mode === "BUY") {
@@ -292,6 +292,7 @@ app.post("/newOrder", async (req, res) => {
         await holding.save();
       } else {
         await HoldingsModel.create({
+          userId,
           name,
           qty,
           avg: price,
@@ -334,14 +335,15 @@ app.post("/newOrder", async (req, res) => {
       holding.price = price;
 
       if (holding.qty === 0) {
-        await HoldingsModel.deleteOne({ name });
+        await HoldingsModel.deleteOne({ userId, name });
       } else {
         await holding.save();
       }
     }
 
     // ---------- POSITIONS ----------
-    let position = await PositionsModel.findOne({ name });
+let position = await PositionsModel.findOne({ userId, name });
+
 
     if (mode === "BUY") {
       if (position) {
@@ -352,6 +354,7 @@ app.post("/newOrder", async (req, res) => {
         await position.save();
       } else {
         await PositionsModel.create({
+          userId,
           product: "CNC",
           name,
           qty,
@@ -368,7 +371,7 @@ app.post("/newOrder", async (req, res) => {
       position.price = price;
 
       if (position.qty <= 0) {
-        await PositionsModel.deleteOne({ name });
+        await PositionsModel.deleteOne({ userId, name });
       } else {
         await position.save();
       }
@@ -380,6 +383,7 @@ app.post("/newOrder", async (req, res) => {
     const randomPrice = price + (Math.random() * 2 - 1); // ±1 fluctuation
 
     await OrdersModel.create({
+      userId : req.user._id,
       name,
       qty,
       price,
@@ -400,11 +404,13 @@ app.post("/newOrder", async (req, res) => {
   }
 });
 
-app.post("/checkHolding", async (req, res) => {
+app.post("/checkHolding", authMiddleware, async (req, res) => {
   let { name, qty } = req.body;
   name = name.trim().toUpperCase();
 
-  const holding = await HoldingsModel.findOne({ name });
+  const userId = req.user._id;
+let holding = await HoldingsModel.findOne({ userId, name });
+
 
   if (!holding) {
     return res
@@ -445,12 +451,12 @@ app.post("/checkHolding", async (req, res) => {
 //   res.send("Funds initialized successfully");
 // });
 
-app.get("/funds", async (req, res) => {
-  const funds = await FundsModel.find({});
+app.get("/funds", authMiddleware, async (req, res) => {
+  const funds = await FundsModel.find({ userId: req.user._id });
   res.json(funds);
 });
 
-app.post("/funds/add", async (req, res) => {
+app.post("/funds/add", authMiddleware, async (req, res) => {
   try {
     const { amount } = req.body;
 
@@ -461,7 +467,7 @@ app.post("/funds/add", async (req, res) => {
       });
     }
 
-    const equityFunds = await FundsModel.findOne({ type: "EQUITY" });
+    const equityFunds = await FundsModel.findOne({ userId: req.user._id, type: "EQUITY" });
 
     if (!equityFunds) {
       return res.status(500).json({
@@ -489,7 +495,7 @@ app.post("/funds/add", async (req, res) => {
 });
 
 // WITHDRAW FUNDS
-app.post("/funds/withdraw", async (req, res) => {
+app.post("/funds/withdraw", authMiddleware, async (req, res) => {
   try {
     const { amount } = req.body;
 
@@ -500,7 +506,20 @@ app.post("/funds/withdraw", async (req, res) => {
       });
     }
 
-    const equityFunds = await FundsModel.findOne({ type: "EQUITY" });
+    const equityFunds = await FundsModel.findOne(
+      { userId: req.user._id, type: "EQUITY" },
+      {
+    $setOnInsert: {
+      userId: req.user._id,
+      type: "EQUITY",
+      openingBalance: 50000,
+      availableCash: 50000,
+      usedMargin: 0,
+      availableMargin: 50000,
+    },
+  },
+  { upsert: true, new: true }
+    );
 
     if (!equityFunds) {
       return res.status(500).json({
@@ -535,9 +554,9 @@ app.post("/funds/withdraw", async (req, res) => {
 });
 
 // ================== GET ALL ORDERS ==================
-app.get("/orders", async (req, res) => {
+app.get("/orders", authMiddleware, async (req, res) => {
   try {
-    const orders = await OrdersModel.find({})
+    const orders = await OrdersModel.find({ userId: req.user._id })
       .sort({ createdAt: -1 }) // 🔥 latest first
       .limit(25); // 🔥 last 26 orders only
 

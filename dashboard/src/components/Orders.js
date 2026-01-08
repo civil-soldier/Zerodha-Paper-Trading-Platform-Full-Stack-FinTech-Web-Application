@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../api/axios";
+
 import { Link, Outlet } from "react-router-dom";
 
 const Orders = () => {

@@ -1,7 +1,7 @@
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 
 
 const ForgotPassword = () => {

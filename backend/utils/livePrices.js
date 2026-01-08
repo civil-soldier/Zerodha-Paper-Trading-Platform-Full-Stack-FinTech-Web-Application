@@ -6,6 +6,11 @@ const basePrices = {
   TCS: 3194.8,
   ITC: 207.9,
   RELIANCE: 2112.4,
+  KPITTECH: 1050.0,
+  WIPRO: 400.3,
+  QUICKHEAL: 520.5,
+  "M&M": 825.6,
+  HUL: 2200.0,
 };
 
 const livePrices = { ...basePrices };

@@ -5,7 +5,8 @@ import React, {
   useEffect,
 } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../api/axios";
+
 import GeneralContext from "./GeneralContext";
 import "./SellActionWindow.css";
 import { toast } from "react-toastify";
