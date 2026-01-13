@@ -28,8 +28,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
   "https://zerodha-paper-trading-platform.vercel.app",
-  "https://zerodha-paper-trading-platform-kfrfcr62m.vercel.app",
-  "https://zerodha-paper-trading-platform-2k2dwm0om.vercel.app"
+  "https://zerodha-paper-trading-platform-64ee.vercel.app",
 ];
 
 app.use(cors({
