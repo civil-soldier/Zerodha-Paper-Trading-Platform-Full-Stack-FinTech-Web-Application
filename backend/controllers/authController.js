@@ -86,8 +86,6 @@ const verifyMobileOtp = async (req, res) => {
   });
 };
 
-
-
 /* =========================
    STEP 2: NAME + EMAIL
 ========================= */
@@ -275,28 +273,26 @@ const login = async (req, res) => {
       });
     }
 
-    const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
 
     // 🔥 INIT FUNDS IF NOT EXISTS
-const existingFunds = await FundsModel.findOne({
-  userId: user._id,
-  type: "EQUITY",
-});
+    const existingFunds = await FundsModel.findOne({
+      userId: user._id,
+      type: "EQUITY",
+    });
 
-if (!existingFunds) {
-  await FundsModel.create({
-    userId: user._id,
-    type: "EQUITY",
-    openingBalance: 50000,
-    availableCash: 50000,
-    usedMargin: 0,
-    availableMargin: 50000,
-  });
-}
+    if (!existingFunds) {
+      await FundsModel.create({
+        userId: user._id,
+        type: "EQUITY",
+        openingBalance: 50000,
+        availableCash: 50000,
+        usedMargin: 0,
+        availableMargin: 50000,
+      });
+    }
 
     res.json({
       success: true,
@@ -329,16 +325,14 @@ const forgotPassword = async (req, res) => {
     }
 
     // ⛔ Rate limit: 5 minutes
-if (
-  user.lastResetEmailAt &&
-  Date.now() - user.lastResetEmailAt.getTime() < 5 * 60 * 1000
-) {
-  return res.status(429).json({
-    message: "Please wait 5 minutes before requesting another reset email",
-  });
-}
-
-
+    if (
+      user.lastResetEmailAt &&
+      Date.now() - user.lastResetEmailAt.getTime() < 5 * 60 * 1000
+    ) {
+      return res.status(429).json({
+        message: "Please wait 5 minutes before requesting another reset email",
+      });
+    }
 
     const resetToken = crypto.randomBytes(32).toString("hex");
 
@@ -347,7 +341,7 @@ if (
     user.lastResetEmailAt = new Date();
     await user.save();
 
-    const resetLink = `http://localhost:3001/reset-password/${resetToken}`;
+    const resetLink = `https://zerodha-paper-trading-platform.vercel.app/reset-password/${resetToken}`;
 
     // ✅ correct util usage
     await sendEmail(user.email, resetLink);
@@ -358,7 +352,6 @@ if (
     res.status(500).json({ message: "Server error" });
   }
 };
-
 
 const resetPassword = async (req, res) => {
   try {
@@ -371,9 +364,7 @@ const resetPassword = async (req, res) => {
     }).select("+password");
 
     if (!user) {
-      return res
-        .status(400)
-        .json({ message: "Invalid or expired reset link" });
+      return res.status(400).json({ message: "Invalid or expired reset link" });
     }
 
     user.password = await bcrypt.hash(password, 10);
@@ -388,9 +379,6 @@ const resetPassword = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
-
-
 
 module.exports = {
   sendMobileOtp,
