@@ -21,32 +21,29 @@ const cleanupExpiredOtps = require("./utils/otpCleanup");
 
 const app = express();
 
+const cors = require("cors");
+
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
   "https://zerodha-paper-trading-platform.vercel.app",
-
-  // allow all preview deployments
-  /^https:\/\/zerodha-paper-trading-platform-64ee-.*\.vercel\.app$/,
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
+  origin: (origin, callback) => {
     if (!origin) return callback(null, true);
 
-    const allowed = allowedOrigins.some(o =>
-      o instanceof RegExp ? o.test(origin) : o === origin
-    );
+    // allow all Vercel preview URLs
+    if (origin.endsWith(".vercel.app")) return callback(null, true);
 
-    if (allowed) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS blocked: " + origin));
-    }
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+
+    console.log("❌ Blocked by CORS:", origin);
+    callback(new Error("Not allowed by CORS"));
   },
   credentials: true,
-  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-  allowedHeaders: ["Content-Type","Authorization"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 app.options("*", cors());
@@ -246,7 +243,7 @@ app.get("/allHoldings", authMiddleware, async (req, res) => {
   res.json(holdings);
 });
 
-app.get("/allPositions",authMiddleware, async (req, res) => {
+app.get("/allPositions", authMiddleware, async (req, res) => {
   const userId = req.user._id;
   let positions = await PositionsModel.find({ userId });
   res.json(positions);
@@ -285,7 +282,10 @@ app.post("/newOrder", authMiddleware, async (req, res) => {
     }
 
     // ================== 🔥 FUNDS FETCH (PASTE HERE) 🔥 ==================
-    const equityFunds = await FundsModel.findOne({ userId: req.user._id, type: "EQUITY" });
+    const equityFunds = await FundsModel.findOne({
+      userId: req.user._id,
+      type: "EQUITY",
+    });
 
     if (!equityFunds) {
       return res.status(500).json({
@@ -297,8 +297,7 @@ app.post("/newOrder", authMiddleware, async (req, res) => {
 
     // ---------- HOLDINGS ----------
     const userId = req.user._id;
-let holding = await HoldingsModel.findOne({ userId, name });
-
+    let holding = await HoldingsModel.findOne({ userId, name });
 
     // ================== BUY ==================
     if (mode === "BUY") {
@@ -378,8 +377,7 @@ let holding = await HoldingsModel.findOne({ userId, name });
     }
 
     // ---------- POSITIONS ----------
-let position = await PositionsModel.findOne({ userId, name });
-
+    let position = await PositionsModel.findOne({ userId, name });
 
     if (mode === "BUY") {
       if (position) {
@@ -419,7 +417,7 @@ let position = await PositionsModel.findOne({ userId, name });
     const randomPrice = price + (Math.random() * 2 - 1); // ±1 fluctuation
 
     await OrdersModel.create({
-      userId : req.user._id,
+      userId: req.user._id,
       name,
       qty,
       price,
@@ -445,8 +443,7 @@ app.post("/checkHolding", authMiddleware, async (req, res) => {
   name = name.trim().toUpperCase();
 
   const userId = req.user._id;
-let holding = await HoldingsModel.findOne({ userId, name });
-
+  let holding = await HoldingsModel.findOne({ userId, name });
 
   if (!holding) {
     return res
@@ -503,7 +500,10 @@ app.post("/funds/add", authMiddleware, async (req, res) => {
       });
     }
 
-    const equityFunds = await FundsModel.findOne({ userId: req.user._id, type: "EQUITY" });
+    const equityFunds = await FundsModel.findOne({
+      userId: req.user._id,
+      type: "EQUITY",
+    });
 
     if (!equityFunds) {
       return res.status(500).json({
@@ -545,16 +545,16 @@ app.post("/funds/withdraw", authMiddleware, async (req, res) => {
     const equityFunds = await FundsModel.findOne(
       { userId: req.user._id, type: "EQUITY" },
       {
-    $setOnInsert: {
-      userId: req.user._id,
-      type: "EQUITY",
-      openingBalance: 50000,
-      availableCash: 50000,
-      usedMargin: 0,
-      availableMargin: 50000,
-    },
-  },
-  { upsert: true, new: true }
+        $setOnInsert: {
+          userId: req.user._id,
+          type: "EQUITY",
+          openingBalance: 50000,
+          availableCash: 50000,
+          usedMargin: 0,
+          availableMargin: 50000,
+        },
+      },
+      { upsert: true, new: true }
     );
 
     if (!equityFunds) {
