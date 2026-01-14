@@ -21,26 +21,38 @@ const cleanupExpiredOtps = require("./utils/otpCleanup");
 
 const app = express();
 
-app.use(express.json());
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
   "https://zerodha-paper-trading-platform.vercel.app",
-  "https://zerodha-paper-trading-platform-64ee.vercel.app"
+
+  // allow all preview deployments
+  /^https:\/\/zerodha-paper-trading-platform-64ee-.*\.vercel\.app$/,
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    return callback(new Error("CORS blocked: " + origin));
+
+    const allowed = allowedOrigins.some(o =>
+      o instanceof RegExp ? o.test(origin) : o === origin
+    );
+
+    if (allowed) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS blocked: " + origin));
+    }
   },
   credentials: true,
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-  allowedHeaders: ["Content-Type","Authorization"]
+  allowedHeaders: ["Content-Type","Authorization"],
 }));
+
+app.options("*", cors());
+
+app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
