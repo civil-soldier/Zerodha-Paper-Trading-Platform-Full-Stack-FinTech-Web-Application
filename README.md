@@ -12,16 +12,24 @@ This platform allows users to create accounts, log in using a unique **User ID**
 https://zerodha-paper-trading-platform-64ee.vercel.app  
 *(Sign up required to access the dashboard)*
 
+---
 
 ## 🖼️ Screenshots
 
-- Marketing or user landing Page:
+### 📌 Marketing / Landing Page
 
 ![Landing](screenshots/landing.png)
 
-- Dashboard:
-  
+<br/>
+
+### 📊 Dashboard View
+
 ![Dashboard](screenshots/dashboard.png)
+
+<br/>
+
+---
+
 
 ## 🧠 What This Project Does
 
