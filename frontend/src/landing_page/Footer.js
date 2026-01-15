@@ -304,10 +304,10 @@ text-decoration: none;
               investors. KYC is one time exercise while dealing in securities
               markets - once KYC is done through a SEBI registered intermediary
               (broker, DP, Mutual Fund etc.), you need not undergo the same
-              process again when you approach another intermediary.”
-              Dear Investor, if you are subscribing to an IPO, there is no need
-              to issue a cheque. Please write the Bank account number and sign
-              the IPO application form to authorize your bank to make payment in
+              process again when you approach another intermediary.” Dear
+              Investor, if you are subscribing to an IPO, there is no need to
+              issue a cheque. Please write the Bank account number and sign the
+              IPO application form to authorize your bank to make payment in
               case of allotment. In case of non allotment the funds will remain
               in your bank account. As a business we don't give stock tips, and
               have not authorized anyone to trade on behalf of others. If you
@@ -326,6 +326,18 @@ text-decoration: none;
               <a href="#">For investor's attention</a>
               <a href="#">Investor charter</a>
             </div>
+
+            <p
+              style={{
+                marginTop: "30px",
+                fontSize: "12px",
+                color: "#878787",
+                textAlign: "center",
+                width: "100%",
+              }}
+            >
+              Built by <strong>Yash Kumar</strong>
+            </p>
           </div>
         </div>
       </div>
