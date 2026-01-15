@@ -8,11 +8,10 @@ This platform allows users to create accounts, log in using a unique **User ID**
 
 🔗 Live Demo
 
-🌐 Frontend
-https://zerodha-paper-trading-platform.vercel.app
+🌐 Zerodha Paper Trading Platform  
+https://zerodha-paper-trading-platform-64ee.vercel.app  
+*(Sign up required to access the dashboard)*
 
-🌐 Alternate Landing
-https://zerodha-paper-trading-platform-64ee.vercel.app
 
 🖼️ Screenshots
 ![Landing](screenshots/landing.png)
@@ -147,6 +146,36 @@ It includes:
 - Cloud hosting & debugging
 
 This is the same architecture used by real fintech platforms.
+
+## ✨ Features
+
+- Secure OTP-based signup (mobile & email)
+- Unique User ID based login (Zerodha-style)
+- Encrypted password storage using bcrypt
+- JWT-based session management
+- Paper trading with virtual money
+- Buy & sell order simulation
+- Portfolio and holdings tracking
+- Trade history
+- Password reset via email OTP
+- Production-ready deployment (Vercel + Render)
+- CORS-protected APIs
+- MongoDB Atlas cloud database
+
+## 🧭 How to Use
+
+1. Open the live platform
+2. Click Sign Up
+3. Enter your mobile number and verify OTP
+4. Verify your email via OTP
+5. Set your username and password
+6. A unique User ID will be generated
+7. Log in using:
+   - User ID
+   - Password
+8. Access the trading dashboard
+9. Place virtual buy/sell trades
+10. Track your portfolio and trade history
 
 ## 👨‍💻 Author
 
