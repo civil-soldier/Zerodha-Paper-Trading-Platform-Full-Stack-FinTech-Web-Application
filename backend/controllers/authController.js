@@ -43,13 +43,16 @@ const verifyMobileOtp = async (req, res) => {
   const { mobile, otp } = req.body;
 
   if (otp !== "000000") {
-    return res.status(400).json({ success: false, message: "Invalid OTP" });
+    return res.status(400).json({
+      success: false,
+      message: "Invalid OTP",
+    });
   }
 
   let user = await UserModel.findOne({ mobile });
 
+  // Safety: create user if not exists
   if (!user) {
-    // safety (ideally yahan nahi aana chahiye)
     user = await UserModel.create({
       mobile,
       signupStep: 1,
@@ -58,33 +61,46 @@ const verifyMobileOtp = async (req, res) => {
     });
   }
 
+  // Always mark mobile verified
   user.isMobileVerified = true;
   await user.save();
 
-  // 🆕 NEW USER (just verified mobile)
-  if (user.signupStep === 1) {
+  /**
+   * OLD USER (completed signup earlier)
+   * Criteria:
+   * - email verified
+   * - username exists
+   * - password exists
+   */
+  if (user.isEmailVerified && user.username && user.password) {
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    return res.json({
+      success: true,
+      userType: "OLD_USER",
+      token,
+    });
+  }
+
+  /**
+   *  BRAND NEW USER
+   * - no email yet
+   */
+  if (!user.email && !user.isEmailVerified) {
     return res.json({
       success: true,
       userType: "NEW_USER",
     });
   }
 
-  // 🔁 OLD USER (email already verified earlier)
-  if (user.isEmailVerified === true && user.signupStep === 5) {
-  const token = jwt.sign(
-    { userId: user._id },
-    process.env.JWT_SECRET,
-    { expiresIn: "1d" }
-  );
-
-  return res.json({
-    success: true,
-    userType: "OLD_USER",
-    token,
-  });
-}
-
-  // ⏸ INCOMPLETE USER
+  /**
+   * INCOMPLETE USER
+   * - started signup but didn’t finish
+   */
   return res.json({
     success: true,
     userType: "INCOMPLETE_USER",
