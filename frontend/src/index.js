@@ -50,14 +50,13 @@ root.render(
       </Route>
 
       <Route
-  path="/account/active"
-  element={
-    <ProtectedRoute>
-      <AccountActive />
-    </ProtectedRoute>
-  }
-/>
-
+        path="/account/active"
+        element={
+          <ProtectedRoute>
+            <AccountActive />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
-  </BrowserRouter>
+  </BrowserRouter>,
 );

@@ -70,13 +70,19 @@ const verifyMobileOtp = async (req, res) => {
   }
 
   // 🔁 OLD USER (email already verified earlier)
-  if (user.isEmailVerified === true) {
-    return res.json({
-      success: true,
-      userType: "OLD_USER",
-      redirect: "/account/active",
-    });
-  }
+  if (user.isEmailVerified === true && user.signupStep === 5) {
+  const token = jwt.sign(
+    { userId: user._id },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+
+  return res.json({
+    success: true,
+    userType: "OLD_USER",
+    token,
+  });
+}
 
   // ⏸ INCOMPLETE USER
   return res.json({
