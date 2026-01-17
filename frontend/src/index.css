@@ -1494,6 +1494,25 @@ input:focus {
   margin: 0;
 }
 
+.faq-link,
+.alert-link,
+.ql-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #387ed1;
+  cursor: pointer;
+  text-align: left;
+  font-size: inherit;
+}
+
+.faq-link:hover,
+.alert-link:hover,
+.ql-link:hover {
+  text-decoration: underline;
+}
+
+
 
 
 

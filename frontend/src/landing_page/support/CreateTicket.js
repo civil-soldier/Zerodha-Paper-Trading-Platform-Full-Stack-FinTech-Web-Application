@@ -93,7 +93,9 @@ function CreateTicket() {
               <ul className="faq-list container hero-section">
                 {section.items.map((item, i) => (
                   <li key={i}>
-                    <a href="#">{item}</a>
+                    <button type="button" className="faq-link">
+                      {item}
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -108,12 +110,16 @@ function CreateTicket() {
         <div className="alert-box">
           <ul>
             <li>
-              <a href="#">
-                Kite affected by Cloudflare downtime <br></br>[Resolved]
-              </a>
+              <button type="button" className="alert-link">
+                Kite affected by Cloudflare downtime <br />
+                [Resolved]
+              </button>
             </li>
             <li>
-              <a href="#">Offer for sale (OFS) – December 2025</a>
+              <button type="button" className="alert-link">
+                Kite affected by Cloudflare downtime <br />
+                [Resolved]
+              </button>
             </li>
           </ul>
         </div>
@@ -124,19 +130,29 @@ function CreateTicket() {
           </div>
 
           <div className="ql-row">
-            <a href="#">1. Track account opening</a>
+            <button type="button" className="ql-link">
+              1. Track account opening
+            </button>
           </div>
           <div className="ql-row">
-            <a href="#">2. Track segment activation</a>
+            <button type="button" className="ql-link">
+              2. Track segment activation
+            </button>
           </div>
           <div className="ql-row">
-            <a href="#">3. Intraday margins</a>
+            <button type="button" className="ql-link">
+              3. Intraday margins
+            </button>
           </div>
           <div className="ql-row">
-            <a href="#">4. Kite user manual</a>
+            <button type="button" className="ql-link">
+              4. Kite user manual
+            </button>
           </div>
           <div className="ql-row">
-            <a href="#">5. Learn how to create a ticket</a>
+            <button type="button" className="ql-link">
+              5. Learn how to create a ticket
+            </button>
           </div>
         </div>
       </div>
