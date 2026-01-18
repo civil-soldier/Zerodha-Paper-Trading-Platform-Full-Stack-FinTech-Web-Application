@@ -17,13 +17,23 @@ const CredentialsPage = () => {
 
   // 🔒 ROUTE GUARD (SAFE)
   useEffect(() => {
-    if (guardRan.current) return;     // ✅ PREVENT RE-RUN
-    guardRan.current = true;
+  if (guardRan.current) return;
+  guardRan.current = true;
 
-    if (!localStorage.getItem("signup_mobile")) {
-      navigate("/signup", { replace: true });
-    }
-  }, [navigate]);
+  const token = localStorage.getItem("token");
+
+  // 🔥 HARD BLOCK — OLD USER
+  if (token) {
+    navigate("/account/active", { replace: true });
+    return;
+  }
+
+  // 🔒 Signup flow protection
+  if (!localStorage.getItem("signup_mobile")) {
+    navigate("/signup", { replace: true });
+  }
+}, [navigate]);
+
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });

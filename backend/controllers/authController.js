@@ -72,7 +72,10 @@ const verifyMobileOtp = async (req, res) => {
    * - username exists
    * - password exists
    */
+// 🔥 OLD USER — credentials already exist
 if (user.username && user.password) {
+
+  // ✅ HARD FIX: normalize completed users
   if (user.signupStep !== 5) {
     user.signupStep = 5;
     await user.save();
@@ -90,6 +93,7 @@ if (user.username && user.password) {
     token,
   });
 }
+
 
   /**
    *  BRAND NEW USER
