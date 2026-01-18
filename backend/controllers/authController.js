@@ -72,19 +72,24 @@ const verifyMobileOtp = async (req, res) => {
    * - username exists
    * - password exists
    */
-  if (user.isEmailVerified && user.username && user.password) {
-    const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
-
-    return res.json({
-      success: true,
-      userType: "OLD_USER",
-      token,
-    });
+if (user.isEmailVerified && user.username && user.password) {
+  if (user.signupStep !== 5) {
+    user.signupStep = 5;
+    await user.save();
   }
+
+  const token = jwt.sign(
+    { userId: user._id },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+
+  return res.json({
+    success: true,
+    userType: "OLD_USER",
+    token,
+  });
+}
 
   /**
    *  BRAND NEW USER
