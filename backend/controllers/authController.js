@@ -72,7 +72,7 @@ const verifyMobileOtp = async (req, res) => {
    * - username exists
    * - password exists
    */
-if (user.isEmailVerified && user.username && user.password) {
+if (user.username && user.password) {
   if (user.signupStep !== 5) {
     user.signupStep = 5;
     await user.save();
