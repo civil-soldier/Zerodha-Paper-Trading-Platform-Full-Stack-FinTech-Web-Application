@@ -16,18 +16,23 @@ const CredentialsPage = () => {
   const guardRan = useRef(false); // ✅ ADD THIS
 
   // 🔒 ROUTE GUARD (SAFE)
-  useEffect(() => {
+ useEffect(() => {
   const token = localStorage.getItem("token");
 
+  // 🚫 OLD USER — NEVER ALLOW
   if (token) {
     navigate("/account/active", { replace: true });
     return;
   }
 
-  if (!localStorage.getItem("signup_mobile")) {
+  const mobile = localStorage.getItem("signup_mobile");
+
+  // 🚫 INVALID SIGNUP STATE
+  if (!mobile) {
     navigate("/signup", { replace: true });
   }
 }, [navigate]);
+
 
 
   const handleChange = (e) =>
