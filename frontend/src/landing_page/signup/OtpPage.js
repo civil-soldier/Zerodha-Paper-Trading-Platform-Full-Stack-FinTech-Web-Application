@@ -32,10 +32,10 @@ function OtpPage({ type = "mobile" }) {
       navigate("/signup", { replace: true });
     }
 
-    if (type === "email" && !mobile) {
+    if (type === "email" && !email) {
       navigate("/signup", { replace: true });
     }
-  }, [type, mobile, navigate]);
+  }, [type, mobile, email, navigate]);
 
   const otpComplete = otp.every((d) => d !== "");
 
@@ -61,7 +61,10 @@ function OtpPage({ type = "mobile" }) {
         localStorage.setItem("signup_mobile", mobile);
 
         if (res.data.userType === "OLD_USER") {
-          localStorage.clear(); // 🔥 NUCLEAR RESET
+          //  DO NOT clear everything
+          localStorage.removeItem("signup_mobile");
+          localStorage.removeItem("signup_email");
+
           localStorage.setItem("token", res.data.token);
 
           window.location.replace("/account/active");
