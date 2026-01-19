@@ -27,22 +27,32 @@ const allowedOrigins = [
   "https://zerodha-paper-trading-platform.vercel.app",
 ];
 
-app.use(cors({
-  origin: true,        // allow all origins dynamically
-  credentials: true,
-  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-  allowedHeaders: ["Content-Type","Authorization"]
-}));
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET,POST,PUT,DELETE,OPTIONS"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization"
+  );
+  res.header("Access-Control-Allow-Credentials", "true");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
 
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use((req, res, next) => {
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
 
 app.use(bodyParser.json());
 app.use("/auth", authRoutes);
