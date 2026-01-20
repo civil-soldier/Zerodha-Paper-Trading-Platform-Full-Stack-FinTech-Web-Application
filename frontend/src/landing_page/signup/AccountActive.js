@@ -1,16 +1,35 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "../../api/api";
 
 const AccountActive = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const mobile = location.state?.mobile;
 
-    useEffect(() => {
-    const storedName = localStorage.getItem("user_name");
-    setName(storedName || "");
-  }, []);
+  useEffect(() => {
+  if (!mobile) {
+    navigate("/signup");
+    return;
+  }
+
+  const fetchUser = async () => {
+    try {
+      const res = await axios.get(
+        `/auth/account-active/${mobile}`
+      );
+      setName(res.data.user.name);
+    } catch (err) {
+      console.error("Failed to fetch account active user", err);
+      navigate("/signup");
+    }
+  };
+
+  fetchUser();
+}, [mobile, navigate]);
 
   // Stable dropdown (ONLY closes on outside click)
   useEffect(() => {
@@ -73,7 +92,7 @@ const AccountActive = () => {
 
               <button
                 onClick={() => {
-                  localStorage.removeItem("token");
+                  localStorage.clear();
                   navigate("/");
                 }}
               >
