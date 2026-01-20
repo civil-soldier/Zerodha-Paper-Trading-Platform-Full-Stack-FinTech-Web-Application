@@ -49,7 +49,7 @@ if (type === "mobile" && !mobile) {
         localStorage.setItem("signup_mobile", mobile);
 
         if (res.data.userType === "OLD_USER") {
-          navigate(res.data.redirect);
+          navigate(res.data.redirect , { state: { mobile } });
           return;
         }
 
