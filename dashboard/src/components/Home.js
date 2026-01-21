@@ -3,6 +3,7 @@ import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
 import DashboardLayout from "./DashboardLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const Home = () => {
   return (
@@ -13,7 +14,7 @@ const Home = () => {
       <Route path="/reset-password/:token" element={<ResetPassword />} />
 
       {/* Dashboard (protected later) */}
-      <Route path="/*" element={<DashboardLayout />} />
+      <Route path="/*" element={ <ProtectedRoute><DashboardLayout /></ProtectedRoute>} />
     </Routes>
   );
 };
