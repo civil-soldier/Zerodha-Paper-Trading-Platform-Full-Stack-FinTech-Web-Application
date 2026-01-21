@@ -6,7 +6,7 @@ const User = require("../model/UserModel");
 
 // 🔥 GET LOGGED IN USER
 router.get("/me", authMiddleware, async (req, res) => {
-  console.log("🔥 /user/me HIT, user:", req.user._id);
+  console.log("🔥 PROFILE /me HIT, user:", req.user._id);
   try {
     const user = await User.findById(req.user._id).select("name");
 
