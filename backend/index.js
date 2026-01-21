@@ -528,25 +528,15 @@ app.post("/funds/withdraw", authMiddleware, async (req, res) => {
       });
     }
 
-    const equityFunds = await FundsModel.findOne(
-      { userId: req.user._id, type: "EQUITY" },
-      {
-        $setOnInsert: {
-          userId: req.user._id,
-          type: "EQUITY",
-          openingBalance: 50000,
-          availableCash: 50000,
-          usedMargin: 0,
-          availableMargin: 50000,
-        },
-      },
-      { upsert: true, new: true }
-    );
+    const equityFunds = await FundsModel.findOne({
+      userId: req.user._id,
+      type: "EQUITY",
+    });
 
     if (!equityFunds) {
-      return res.status(500).json({
+      return res.status(400).json({
         success: false,
-        message: "Funds not initialized",
+        message: "Equity funds not initialized",
       });
     }
 
