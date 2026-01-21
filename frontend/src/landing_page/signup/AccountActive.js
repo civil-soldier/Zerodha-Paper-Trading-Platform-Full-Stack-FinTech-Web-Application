@@ -16,31 +16,18 @@ const AccountActive = () => {
     return;
   }
 
-const location = useLocation();
-const mobileFromState = location.state?.mobile; // optional
-
-useEffect(() => {
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get("/profile/me");
-
-      setName(res.data.user.name);
-
-      // optional analytics / debug
-      if (mobileFromState) {
-        console.log("Signup completed via mobile:", mobileFromState);
+const fetchUser = async () => {
+      try {
+        const res = await axios.get(`/auth/account-active/${mobile}`);
+        setName(res.data.user.name);
+      } catch (err) {
+        console.error("Failed to fetch account active user", err);
+        navigate("/signup");
       }
-    } catch {
-      navigate("/signup");
-    }
-  };
+    };
 
-  fetchUser();
-}, []);
-
-
-  fetchUser();
-}, [mobile, navigate]);
+    fetchUser();
+  }, [mobile, navigate]);
 
   // Stable dropdown (ONLY closes on outside click)
   useEffect(() => {
