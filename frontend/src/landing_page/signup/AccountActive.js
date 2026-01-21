@@ -8,16 +8,14 @@ const AccountActive = () => {
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
-  const mobile = location.state?.mobile;
+  const mobile = location.state?.mobile || localStorage.getItem("mobile");
 
   useEffect(() => {
   if (!mobile) {
     navigate("/signup");
     return;
-  }
-}, [mobile, navigate]);
+  };
 
-useEffect(() => {
   const fetchUser = async () => {
     try {
       const res = await axios.get(`/auth/account-active/${mobile}`);
