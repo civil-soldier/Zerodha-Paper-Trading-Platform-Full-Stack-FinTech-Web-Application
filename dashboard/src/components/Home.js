@@ -4,6 +4,7 @@ import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
 import DashboardLayout from "./DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import { GeneralContextProvider } from "./GeneralContext";
 
 const Home = () => {
   return (
@@ -14,7 +15,7 @@ const Home = () => {
       <Route path="/reset-password/:token" element={<ResetPassword />} />
 
       {/* Dashboard (protected later) */}
-      <Route path="/*" element={ <ProtectedRoute><DashboardLayout /></ProtectedRoute>} />
+      <Route path="/*" element={ <ProtectedRoute> <GeneralContextProvider><DashboardLayout /></GeneralContextProvider></ProtectedRoute>} />
     </Routes>
   );
 };
