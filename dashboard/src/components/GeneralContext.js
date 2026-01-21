@@ -68,7 +68,7 @@ export const GeneralContextProvider = (props) => {
 
   const fetchUser = async () => {
   try {
-    const res = await axios.get("/user/me");
+    const res = await axios.get("/profile/me");
     setUser(res.data.user);
   } catch (err) {
     console.error("Fetch user failed");

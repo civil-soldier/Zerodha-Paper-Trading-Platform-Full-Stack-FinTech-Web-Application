@@ -18,6 +18,7 @@ const userRoutes = require("./routes/userRoutes");
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 const cleanupExpiredOtps = require("./utils/otpCleanup");
+const profileRoutes = require("./routes/profileRoutes");
 
 const app = express();
 
@@ -47,8 +48,8 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
+app.use("/profile", profileRoutes);
 app.use(express.urlencoded({ extended: true }));
-
 
 cron.schedule("*/5 * * * *", cleanupExpiredOtps, {
   scheduled: true,
