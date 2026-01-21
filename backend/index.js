@@ -48,7 +48,7 @@ app.use(bodyParser.json());
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use(express.urlencoded({ extended: true }));
-app.use("/api/user", require("./routes/user"));
+
 
 cron.schedule("*/5 * * * *", cleanupExpiredOtps, {
   scheduled: true,
