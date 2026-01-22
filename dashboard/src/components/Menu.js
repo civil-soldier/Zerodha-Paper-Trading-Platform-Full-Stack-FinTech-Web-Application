@@ -122,7 +122,7 @@ const initials = name
           <li>
             <Link
               style={{ textDecoration: "none" }}
-              to="/apps"
+              to="/bids"
               onClick={() => handleMenuClick(6)}
             >
               <p className={selectedMenu === 6 ? activeMenuClass : menuClass} >
