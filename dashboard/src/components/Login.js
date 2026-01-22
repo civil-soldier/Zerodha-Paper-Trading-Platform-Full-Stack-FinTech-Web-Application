@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "../api/axios";
 import { LANDING_URL } from "../config";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,35 +11,44 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      if (!username || !password) {
-        alert("Username and password required");
-        return;
-      }
+const handleLogin = async () => {
+  if (!username || !password) {
+    toast.error("Username and password required");
+    return;
+  }
 
-      const res = await axios.post("/auth/login", {
-        username,
-        password,
-      });
+  try {
+    const res = await axios.post("/auth/login", {
+      username,
+      password,
+    });
 
-      if (res.data.success) {
-        const { token, user } = res.data;
+    if (res.data.success) {
+      const { token, user } = res.data;
 
-        // Save auth token
-        localStorage.setItem("token", token);
-        localStorage.setItem("user_id", user._id);
-        localStorage.setItem("user_name", user.name);
-        localStorage.setItem("user_email", user.email);
-        localStorage.setItem("user_username", user.username);
+      localStorage.setItem("token", token);
+      localStorage.setItem("user_id", user._id);
+      localStorage.setItem("user_name", user.name);
+      localStorage.setItem("user_email", user.email);
+      localStorage.setItem("user_username", user.username);
 
-        // Go to dashboard
+      toast.success(`Welcome back, ${user.name} 👋`);
+
+      setTimeout(() => {
         navigate("/", { replace: true });
-      }
-    } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
+      }, 800);
     }
-  };
+  } catch (err) {
+    const status = err.response?.status;
+    const message =
+      err.response?.data?.message ||
+      (status === 500
+        ? "Server error. Try again later."
+        : "Login failed");
+
+    toast.error(message);
+  }
+};
 
   return (
     <div className="login-page">

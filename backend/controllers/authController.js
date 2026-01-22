@@ -223,19 +223,34 @@ const login = async (req, res) => {
 
     const user = await UserModel.findOne({ username }).select("+password");
 
-    if (!user || user.signupStep !== 5) {
-      return res.status(403).json({ success: false });
+    // User not found or incomplete signup
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    if (user.signupStep !== 5) {
+      return res.status(403).json({
+        success: false,
+        message: "Account not fully activated",
+      });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ success: false });
+      return res.status(401).json({
+        success: false,
+        message: "Incorrect password",
+      });
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
+    // Ensure equity funds
     const existingFunds = await FundsModel.findOne({
       userId: user._id,
       type: "EQUITY",
@@ -256,14 +271,18 @@ const login = async (req, res) => {
       success: true,
       token,
       user: {
-        id: user._id,
+        _id: user._id,
         username: user.username,
         email: user.email,
         name: user.name,
       },
     });
   } catch (err) {
-    res.status(500).json({ success: false });
+    console.error("LOGIN ERROR:", err);
+    res.status(500).json({
+      success: false,
+      message: "Server error. Please try again later.",
+    });
   }
 };
 

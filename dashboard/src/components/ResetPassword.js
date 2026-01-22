@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import axios from "../api/axios";
 import { LANDING_URL } from "../config";
+import { toast } from "react-toastify";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -11,32 +12,31 @@ const ResetPassword = () => {
   const [confirm, setConfirm] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleReset = async () => {
-    if (!password || !confirm) {
-      setMessage("All fields are required");
-      return;
-    }
+const handleReset = async () => {
+  if (!password || !confirm) {
+    toast.error("All fields are required");
+    return;
+  }
 
-    if (password !== confirm) {
-      setMessage("Passwords do not match");
-      return;
-    }
+  if (password !== confirm) {
+    toast.error("Passwords do not match");
+    return;
+  }
 
-    try {
-      setMessage("Resetting password...");
+  try {
+    toast.info("Resetting password...");
 
-      await axios.post(`/auth/reset-password/${token}`, { password });
+    await axios.post(`/auth/reset-password/${token}`, { password });
 
-      setMessage("Password reset successful");
+    toast.success("Password reset successful");
 
-      setTimeout(() => {
-        navigate("/login");
-      }, 1500);
-    } catch (err) {
-      console.error(err);
-      setMessage("Invalid or expired reset link");
-    }
-  };
+    setTimeout(() => {
+      navigate("/login");
+    }, 1200);
+  } catch (err) {
+    toast.error("Invalid or expired reset link");
+  }
+};
 
   return (
     <div className="login-page">

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "../api/axios";
 import { LANDING_URL } from "../config";
+import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -10,27 +11,27 @@ const ForgotPassword = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    if (!email) {
-      setMessage("Please enter your registered email");
-      return;
-    }
+const handleSubmit = async () => {
+  if (!email) {
+    toast.error("Please enter your registered email");
+    return;
+  }
 
-    try {
-      setLoading(true);
-      setMessage("Sending reset link...");
+  try {
+    setLoading(true);
+    toast.info("Sending reset link...");
 
-      await axios.post("/auth/forgot-password", { email });
+    await axios.post("/auth/forgot-password", { email });
 
-      setMessage("If this email exists, a reset link will be sent.");
-    } catch (err) {
-      const msg =
-        err.response?.data?.message || "Something went wrong. Try again.";
-      setMessage(msg);
-    } finally {
-      setLoading(false);
-    }
-  };
+    toast.success("If this email exists, a reset link will be sent.");
+  } catch (err) {
+    toast.error(
+      err.response?.data?.message || "Something went wrong. Try again."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="login-page">
