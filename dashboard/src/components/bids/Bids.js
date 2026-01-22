@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./bids.css";
+import "./Bids.css";
 import IpoList from "./IpoList";
 
 const Bids = () => {
@@ -10,7 +10,8 @@ const Bids = () => {
       <h1 className="bids-title">Bids</h1>
 
       {/* Tabs */}
-      <div className="bids-tabs">
+      <div className="bid
+      s-tabs">
         {["ipo", "govt", "auctions", "corporate", "sse"].map((tab) => (
           <button
             key={tab}
