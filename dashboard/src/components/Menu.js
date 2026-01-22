@@ -126,7 +126,7 @@ const initials = name
               onClick={() => handleMenuClick(6)}
             >
               <p className={selectedMenu === 6 ? activeMenuClass : menuClass} >
-                Apps
+                Bids
               </p>
             </Link>
           </li>

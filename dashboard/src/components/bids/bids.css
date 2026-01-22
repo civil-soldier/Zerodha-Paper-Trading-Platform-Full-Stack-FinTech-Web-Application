@@ -1,0 +1,40 @@
+.bids-container {
+  padding: 24px;
+  color: #fff;
+}
+
+.bids-title {
+  margin-bottom: 16px;
+}
+
+.bids-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.bids-tab {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.bids-tab.active {
+  color: #ff5722;
+  border-bottom: 2px solid #ff5722;
+}
+
+.bids-content {
+  background: #0f141b;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.empty-state {
+  text-align: center;
+  color: #777;
+  padding: 60px 0;
+}
