@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./bids.css";
-import IpoList from "./IpoList";
-import GovtSecuritiesList from "./GovtSecuritiesList";
+import IpoList, { ipoData } from "./IpoList";
+import GovtSecuritiesList, { govtData } from "./GovtSecuritiesList";
 
 const EmptyState = ({ title, subtitle }) => (
   <div className="empty-state">
@@ -12,12 +12,15 @@ const EmptyState = ({ title, subtitle }) => (
 
 const Bids = () => {
   const [activeTab, setActiveTab] = useState("ipo");
+  const [search, setSearch] = useState("");
+
+  const ipoCount = ipoData.filter(i => i.status === "APPLY").length;
+  const govtCount = govtData.length;
 
   return (
     <div className="data-card">
-      <h1 className="bids-title">IPOs</h1>
+      <h1 className="bids-title">Bids</h1>
 
-      {/* Tabs */}
       <div className="bids-tabs">
         {["ipo", "govt", "auctions", "corporate", "sse"].map((tab) => (
           <button
@@ -30,16 +33,27 @@ const Bids = () => {
         ))}
       </div>
 
-      {/* Table / Content Card */}
+      <div className="bids-topbar">
+        <div className="section-header">
+          {activeTab === "ipo" && <h2>IPOs ({ipoCount})</h2>}
+          {activeTab === "govt" && <h2>Govt. Securities ({govtCount})</h2>}
+        </div>
+
+        <input
+          type="text"
+          placeholder="Search..."
+          className="bids-search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value.toLowerCase())}
+        />
+      </div>
+
       <div className="table-card">
-        {activeTab === "ipo" && <IpoList />}
-        {activeTab === "govt" && <GovtSecuritiesList />}
+        {activeTab === "ipo" && <IpoList search={search} />}
+        {activeTab === "govt" && <GovtSecuritiesList search={search} />}
 
         {activeTab === "auctions" && (
-          <EmptyState
-            title="There are no stocks for auctions yet."
-            subtitle="The auction market opens at 2:30 PM. Stocks eligible to be sold in the auction will be listed here."
-          />
+          <EmptyState title="There are no stocks for auctions yet." />
         )}
 
         {activeTab === "corporate" && (
@@ -47,10 +61,7 @@ const Bids = () => {
         )}
 
         {activeTab === "sse" && (
-          <EmptyState
-            title="No active Social Stock Exchange (SSE) issues."
-            subtitle="SSE allows non-profits to raise funds for their causes."
-          />
+          <EmptyState title="No active Social Stock Exchange (SSE) issues." />
         )}
       </div>
     </div>

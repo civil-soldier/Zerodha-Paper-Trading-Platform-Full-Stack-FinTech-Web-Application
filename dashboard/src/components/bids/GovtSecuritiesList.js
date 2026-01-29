@@ -31,8 +31,15 @@ const govtSecurities = [
   },
 ];
 
-const GovtSecuritiesList = () => {
+export const govtData = govtSecurities; // ✅ NOW after declaration
+
+const GovtSecuritiesList = ({ search }) => {
   const [selectedGsec, setSelectedGsec] = useState(null);
+
+  const filtered = govtSecurities.map(sec => {
+    const match = sec.instrument.toLowerCase().includes(search || "");
+    return { ...sec, match };
+  });
 
   return (
     <>
@@ -49,22 +56,18 @@ const GovtSecuritiesList = () => {
         </thead>
 
         <tbody>
-          {govtSecurities.map((sec) => (
-            <tr key={sec.id}>
-              <td>
-                <span className="gsec-badge">{sec.type}</span>
-              </td>
-
+          {filtered.map((sec) => (
+            <tr
+              key={sec.id}
+              className={`${search && !sec.match ? "row-faded" : ""} ${sec.match ? "row-highlight" : ""}`}
+            >
+              <td><span className="gsec-badge">{sec.type}</span></td>
               <td>{sec.instrument}</td>
               <td>{sec.yield}</td>
               <td>{sec.endsOn}</td>
               <td className="muted">—</td>
-
               <td>
-                <button
-                  className="apply-btn"
-                  onClick={() => setSelectedGsec(sec)}
-                >
+                <button className="apply-btn" onClick={() => setSelectedGsec(sec)}>
                   Place bid
                 </button>
               </td>
@@ -73,7 +76,6 @@ const GovtSecuritiesList = () => {
         </tbody>
       </table>
 
-      {/* ✅ Modal Render */}
       {selectedGsec && (
         <GsecBidModal
           bond={selectedGsec}

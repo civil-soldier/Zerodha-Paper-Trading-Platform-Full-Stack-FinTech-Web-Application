@@ -402,3 +402,8 @@
   margin: 6px 0 0;
   color: white;
 }
+
+.row-faded { opacity: 0.15; transition: 0.3s; }
+.row-highlight { background: rgba(0,150,255,0.08); border-left: 3px solid #1e90ff; }
+.bids-topbar { display:flex; justify-content:space-between; align-items:center; margin:10px 0 15px; color: white;}
+.bids-search { background:#111; border:1px solid #333; padding:14px 14px; border-radius:6px; color:white; }
