@@ -43,9 +43,7 @@ const Bids = () => {
         )}
 
         {activeTab === "corporate" && (
-          <EmptyState
-            title="There are no open corporate actions right now."
-          />
+          <EmptyState title="There are no open corporate actions right now." />
         )}
 
         {activeTab === "sse" && (

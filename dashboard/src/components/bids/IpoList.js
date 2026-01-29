@@ -29,7 +29,7 @@ const mockIpos = [
     date: "21st – 23rd Jan",
     price: "128 – 135",
     minAmount: 270000,
-    qty: 2000,
+    lotSize: 2000,
     status: "APPLY",
   },
   {
@@ -39,7 +39,7 @@ const mockIpos = [
     date: "22nd – 27th Jan",
     price: "67 – 70",
     minAmount: 280000,
-    qty: 4000,
+    lotSize: 4000,
     status: "APPLY",
   },
   {
@@ -49,7 +49,7 @@ const mockIpos = [
     date: "22nd – 27th Jan",
     price: "140 – 144",
     minAmount: 288000,
-    qty: 2000,
+    lotSize: 2000,
     status: "APPLY",
   },
 
@@ -72,7 +72,7 @@ const mockIpos = [
     date: "10 – 12 Jan",
     price: "345 – 355",
     minAmount: 17775,
-    qty: 41,
+    lotSize: 41,
     status: "CLOSED",
   },
 ];
@@ -95,7 +95,10 @@ const IpoList = () => {
 
         <tbody>
           {mockIpos.map((ipo) => (
-            <tr key={ipo.id} className={ipo.status === "CLOSED" ? "row-disabled" : ""}>
+            <tr
+              key={ipo.id}
+              className={ipo.status === "CLOSED" ? "row-disabled" : ""}
+            >
               <td>
                 <div className="ipo-name">{ipo.name}</div>
                 <div className="ipo-sub">{ipo.company}</div>
