@@ -19,7 +19,6 @@ const GsecBidModal = ({ bond, onClose }) => {
     calculatedQty = Math.floor(calculatedQty / 100) * 100;
 
     setQty(calculatedQty);
-    setAmount(calculatedQty * bond.price);
   }, [amount, bond.price]);
 
   const handleBid = () => {
