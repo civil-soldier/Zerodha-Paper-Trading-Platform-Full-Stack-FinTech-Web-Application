@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./bids.css";
-import IpoList, { ipoData } from "./IpoList";
 import GovtSecuritiesList, { govtData } from "./GovtSecuritiesList";
+import IpoList from "./IpoList";
 
 const EmptyState = ({ title, subtitle }) => (
   <div className="empty-state">
@@ -14,7 +14,6 @@ const Bids = () => {
   const [activeTab, setActiveTab] = useState("ipo");
   const [search, setSearch] = useState("");
 
-  const ipoCount = ipoData.filter(i => i.status === "APPLY").length;
   const govtCount = govtData.length;
 
   return (
@@ -35,7 +34,7 @@ const Bids = () => {
 
       <div className="bids-topbar">
         <div className="section-header">
-          {activeTab === "ipo" && <h2>IPOs ({ipoCount})</h2>}
+          {activeTab === "ipo" && <h2>IPOs</h2>}
           {activeTab === "govt" && <h2>Govt. Securities ({govtCount})</h2>}
         </div>
 
