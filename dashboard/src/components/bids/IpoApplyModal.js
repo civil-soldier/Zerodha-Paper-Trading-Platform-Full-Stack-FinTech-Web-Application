@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
-const IpoApplyModal = ({ ipo, onClose }) => {
+const IpoApplyModal = ({ ipo, onClose, refreshFunds }) => {
   const hasRange = ipo.price.includes("–") || ipo.price.includes("-");
 
   const minPrice = hasRange
@@ -11,13 +11,13 @@ const IpoApplyModal = ({ ipo, onClose }) => {
     ? Number(ipo.price.split(/–|-/)[1].trim())
     : Number(ipo.price);
 
-  // 🔥 DEFAULT VALUES (THIS WAS MISSING)
+  //  DEFAULT VALUES (THIS WAS MISSING)
   const [qty, setQty] = useState(ipo.lotSize);
   const [price, setPrice] = useState(maxPrice); // ALWAYS UPPER BAND
   const [cutoff, setCutoff] = useState(hasRange);
   const [amount, setAmount] = useState(ipo.minAmount); // TABLE MIN AMOUNT
 
-  // 💰 Recalculate only if user changes things
+  //  Recalculate only if user changes things
   useEffect(() => {
     const total = qty * price;
     setAmount(total);
@@ -41,9 +41,33 @@ const IpoApplyModal = ({ ipo, onClose }) => {
     setPrice(next ? maxPrice : minPrice);
   };
 
-  const handleApply = () => {
-    toast.success("IPO bid submitted");
-    onClose();
+  const lots = qty / ipo.lotSize;
+
+  const handleApply = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/ipo/apply`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          ipoId: ipo._id, // MUST be Mongo ID
+          lots,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      toast.success("IPO applied & funds blocked");
+      refreshFunds(); // update dashboard
+      onClose();
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (

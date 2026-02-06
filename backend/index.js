@@ -20,6 +20,7 @@ const uri = process.env.MONGO_URL;
 const cleanupExpiredOtps = require("./utils/otpCleanup");
 const profileRoutes = require("./routes/profileRoutes");
 
+
 const app = express();
 
 const allowedOrigins = [
@@ -50,6 +51,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/profile", profileRoutes);
 app.use(express.urlencoded({ extended: true }));
+app.use("/api/ipo", require("./routes/ipoRoutes"));
 
 cron.schedule("*/5 * * * *", cleanupExpiredOtps, {
   scheduled: true,

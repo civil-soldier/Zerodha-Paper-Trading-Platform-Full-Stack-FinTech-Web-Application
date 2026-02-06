@@ -16,7 +16,7 @@ const Funds = () => {
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [amount, setAmount] = useState("");
 
-  // ✅ Safe DB extraction
+  // Safe DB extraction
   const equityFunds = funds.find((f) => f.type === "EQUITY") || {};
   const commodityFunds = funds.find((f) => f.type === "COMMODITY") || {};
   const hasCommodityAccount = commodityFunds?.openingBalance > 0;
