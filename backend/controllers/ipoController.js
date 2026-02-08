@@ -50,3 +50,13 @@ exports.applyIPO = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+exports.getAllIPOs = async (req, res) => {
+  try {
+    const ipos = await IPO.find({ status: "OPEN" });
+    res.status(200).json(ipos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
