@@ -2,14 +2,20 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 const IpoApplyModal = ({ ipo, onClose, refreshFunds }) => {
-  const hasRange = ipo.price.includes("–") || ipo.price.includes("-");
+  const cleanPrice = (p) =>
+  Number(String(p).replace(/[₹,\s]/g, ""));
+  const priceStr = String(ipo.price);
+const hasRange = priceStr.includes("–") || priceStr.includes("-");
+
 
   const minPrice = hasRange
-    ? Number(ipo.price.split(/–|-/)[0].trim())
-    : Number(ipo.price);
-  const maxPrice = hasRange
-    ? Number(ipo.price.split(/–|-/)[1].trim())
-    : Number(ipo.price);
+  ? cleanPrice(priceStr.split(/–|-/)[0])
+  : cleanPrice(priceStr);
+
+const maxPrice = hasRange
+  ? cleanPrice(priceStr.split(/–|-/)[1])
+  : cleanPrice(priceStr);
+
 
   //  DEFAULT VALUES (THIS WAS MISSING)
   const [qty, setQty] = useState(ipo.lotSize);
@@ -69,6 +75,13 @@ const IpoApplyModal = ({ ipo, onClose, refreshFunds }) => {
       toast.error(err.message);
     }
   };
+
+  useEffect(() => {
+  if (!qty || !price) return;
+  const total = qty * price;
+  setAmount(total);
+}, [qty, price]);
+
 
   return (
     <div className="modal-overlay">
