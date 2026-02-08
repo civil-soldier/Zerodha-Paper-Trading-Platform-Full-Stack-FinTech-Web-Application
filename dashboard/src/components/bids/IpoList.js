@@ -16,7 +16,7 @@ const IpoList = ({ search }) => {
   });
 
   useEffect(() => {
-  fetch(`${process.env.REACT_APP_API_URL}api/ipos`, {
+  fetch(`${process.env.REACT_APP_API_URL}/api/ipos`, {
   method: "GET",
   credentials: "include"
 })
