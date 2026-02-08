@@ -53,7 +53,7 @@ const maxPrice = hasRange
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/ipo/apply`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/ipos/apply`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
