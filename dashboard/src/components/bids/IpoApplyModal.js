@@ -101,7 +101,7 @@ const maxPrice = hasRange
         <div className="info-grid">
           <div className="info-box">
             <span>Issue Price</span>
-            <b>₹{ipo.price}</b>
+            <b>{ipo.price}</b>
           </div>
           <div className="info-box">
             <span>Lot Size</span>
@@ -155,6 +155,12 @@ const maxPrice = hasRange
                 Apply at Cutoff Price (₹{maxPrice})
               </div>
             )}
+            {!hasRange && (
+  <div style={{ fontSize: "13px", color: "#888", marginTop: "8px" }}>
+    Fixed Price IPO — bidding not required
+  </div>
+)}
+
           </div>
         </div>
 
