@@ -51,7 +51,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/profile", profileRoutes);
 app.use(express.urlencoded({ extended: true }));
-app.use("/api/ipo", require("./routes/ipoRoutes"));
+app.use("/api/ipos", require("./routes/ipoRoutes"));
 
 cron.schedule("*/5 * * * *", cleanupExpiredOtps, {
   scheduled: true,
