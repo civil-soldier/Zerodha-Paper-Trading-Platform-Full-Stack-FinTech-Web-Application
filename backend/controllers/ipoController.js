@@ -53,7 +53,7 @@ exports.applyIPO = async (req, res) => {
 
 exports.getAllIPOs = async (req, res) => {
   try {
-    const ipos = await IPO.find({ status: "OPEN" });
+    const ipos = await IPO.find();
     res.status(200).json(ipos);
   } catch (error) {
     console.error(error);
