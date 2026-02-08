@@ -16,7 +16,7 @@ const IpoList = ({ search }) => {
   });
 
   useEffect(() => {
-  fetch(`${process.env.REACT_APP_API_URL}/api/ipo`)
+  fetch(`${process.env.REACT_APP_API_URL}/api/ipos`)
     .then(res => res.json())
     .then(data => {
       const formatted = data.map((ipo, index) => ({

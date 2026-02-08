@@ -41,10 +41,21 @@ exports.applyIPO = async (req, res) => {
       return res.status(400).json({ message: "Insufficient funds" });
     }
 
-    funds.availableCash -= amount;
-    funds.usedMargin += amount;
+    const updatedFunds = await FundsModel.findOneAndUpdate(
+  { userId, type: "EQUITY", availableCash: { $gte: amount } },
+  {
+    $inc: {
+      availableCash: -amount,
+      usedMargin: amount,
+    },
+  },
+  { new: true }
+);
 
-    await funds.save();
+if (!updatedFunds) {
+  return res.status(400).json({ message: "Insufficient funds" });
+}
+
 
     //  Save IPO Application
     const application = await IPOApplication.create({
@@ -59,6 +70,16 @@ exports.applyIPO = async (req, res) => {
       message: "IPO applied successfully",
       application,
     });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getAllIPOs = async (req, res) => {
+  try {
+    const ipos = await IPO.find({ status: "OPEN" });
+    res.status(200).json(ipos);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
