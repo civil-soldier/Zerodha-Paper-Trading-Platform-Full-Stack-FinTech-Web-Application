@@ -16,23 +16,26 @@ const IpoList = ({ search }) => {
   });
 
   useEffect(() => {
-  fetch(`${process.env.REACT_APP_API_URL}api/ipos`)
-    .then(res => res.json())
-    .then(data => {
-      const formatted = data.map((ipo, index) => ({
-        id: index + 1,
-        _id: ipo._id, // for applying IPO
-        name: ipo.symbol,
-        company: ipo.companyName,
-        date: "20 – 22 Jan", // optional later dynamic karenge
-        price: `₹${ipo.price}`, // backend me upper band only
-        minAmount: ipo.price * ipo.lotSize,
-        lotSize: ipo.lotSize,
-        status: ipo.status === "OPEN" ? "APPLY" : "CLOSED"
-      }));
+  fetch(`${process.env.REACT_APP_API_URL}/api/ipos`, {
+  method: "GET",
+  credentials: "include"
+})
+  .then(res => res.json())
+  .then(data => {
+    const formatted = data.map((ipo, index) => ({
+      id: index + 1,
+      _id: ipo._id,
+      name: ipo.symbol,
+      company: ipo.companyName,
+      date: "20 – 22 Jan",
+      price: `₹${ipo.price}`,
+      minAmount: ipo.price * ipo.lotSize,
+      lotSize: ipo.lotSize,
+      status: ipo.status === "OPEN" ? "APPLY" : "CLOSED"
+    }));
+    setIpos(formatted);
+  });
 
-      setIpos(formatted);
-    });
 }, []);
 
 
