@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./bids.css";
 import IpoList from "./IpoList";
+import GovtSecuritiesList from "./GovtSecuritiesList";
 
 const EmptyState = ({ title, subtitle }) => (
   <div className="empty-state">
