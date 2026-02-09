@@ -4,31 +4,55 @@ import { toast } from "react-toastify";
 const MIN_QTY = 100;
 
 const GsecBidModal = ({ bond, onClose }) => {
-  const [amount, setAmount] = useState(bond.price * MIN_QTY);
+  const [amount, setAmount] = useState(bond.pricePerUnit * MIN_QTY);
   const [qty, setQty] = useState(MIN_QTY);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let calculatedQty = Math.floor(amount / bond.price);
+    let calculatedQty = Math.floor(amount / bond.pricePerUnit);
 
-    // Minimum 100 units
-    if (calculatedQty < MIN_QTY) {
-      calculatedQty = MIN_QTY;
-    }
-
-    // Round to nearest 100
+    if (calculatedQty < MIN_QTY) calculatedQty = MIN_QTY;
     calculatedQty = Math.floor(calculatedQty / 100) * 100;
 
     setQty(calculatedQty);
-  }, [amount, bond.price]);
+  }, [amount, bond.pricePerUnit]);
 
-  const handleBid = () => {
+  const handleBid = async () => {
     if (qty < MIN_QTY) {
       toast.error("Minimum 100 units required");
       return;
     }
 
-    toast.success("Bid placed successfully");
-    onClose();
+    try {
+      setLoading(true);
+
+      const res = await fetch(
+        "https://zerodha-papertradingplatform.onrender.com/api/gsec/bid",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            gsecId: bond._id,
+            bidYield: bond.indicativeYield,
+            investmentAmount: qty * bond.pricePerUnit,
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message);
+
+      toast.success("Bid placed successfully 🎉");
+      onClose();
+    } catch (err) {
+      toast.error(err.message || "Bid failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -36,12 +60,10 @@ const GsecBidModal = ({ bond, onClose }) => {
       <div className="modal-card-lg">
         <div className="modal-header">
           <div>
-            <h2>{bond.instrument}</h2>
+            <h2>{bond.name}</h2>
             <span className="gsec-badge">Govt Security</span>
           </div>
-          <button className="close-btn" onClick={onClose}>
-            ✕
-          </button>
+          <button className="close-btn" onClick={onClose}>✕</button>
         </div>
 
         <div className="modal-divider" />
@@ -49,15 +71,15 @@ const GsecBidModal = ({ bond, onClose }) => {
         <div className="info-grid">
           <div className="info-box">
             <span>Yield</span>
-            <b>{bond.yield}</b>
+            <b>{bond.indicativeYield}%</b>
           </div>
           <div className="info-box">
             <span>Price</span>
-            <b>₹{bond.price}</b>
+            <b>₹{bond.pricePerUnit}</b>
           </div>
           <div className="info-box">
             <span>Maturity</span>
-            <b>{bond.maturity}</b>
+            <b>{new Date(bond.maturityDate).toDateString()}</b>
           </div>
         </div>
 
@@ -67,11 +89,11 @@ const GsecBidModal = ({ bond, onClose }) => {
             type="number"
             value={amount}
             step="100"
-            min={bond.price * MIN_QTY}
+            min={bond.pricePerUnit * MIN_QTY}
             onChange={(e) => setAmount(Number(e.target.value))}
           />
           <small className="muted">
-            Minimum ₹{bond.price * MIN_QTY} (100 units)
+            Minimum ₹{bond.pricePerUnit * MIN_QTY} (100 units)
           </small>
         </div>
 
@@ -81,8 +103,8 @@ const GsecBidModal = ({ bond, onClose }) => {
         </div>
 
         <div className="modal-actions">
-          <button className="btn-primary" onClick={handleBid}>
-            Place Bid
+          <button className="btn-primary" onClick={handleBid} disabled={loading}>
+            {loading ? "Placing..." : "Place Bid"}
           </button>
           <button className="btn-secondary" onClick={onClose}>
             Cancel

@@ -89,3 +89,13 @@ exports.placeBid = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+exports.getAllGsecs = async (req, res) => {
+  try {
+    const gsecs = await Gsec.find({ status: "OPEN" }).sort({ maturityDate: 1 });
+    res.status(200).json(gsecs);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
