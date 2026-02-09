@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 const cleanupExpiredOtps = require("./utils/otpCleanup");
 const profileRoutes = require("./routes/profileRoutes");
-
+const gsecRoutes = require("./routes/gsecRoutes");
 
 const app = express();
 
@@ -52,6 +52,7 @@ app.use("/user", userRoutes);
 app.use("/profile", profileRoutes);
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/ipos", require("./routes/ipoRoutes"));
+app.use("/api/gsecs", gsecRoutes);
 
 cron.schedule("*/5 * * * *", cleanupExpiredOtps, {
   scheduled: true,

@@ -1,4 +1,4 @@
 const mongoose = require("mongoose");
-const GsecSchema = require("../schemas/GsecSchema");
+const GsecsSchema = require("../schemas/GsecsSchema");
 
-module.exports = mongoose.model("Gsec", GsecSchema);
+module.exports = mongoose.model("Gsec", GsecsSchema);

@@ -1,24 +1,42 @@
-const mongoose = require("mongoose");
+const Gsec = require("../model/GsecModel");
+const GsecApplication = require("../model/GsecApplicationModel");
+const { FundsModel } = require("../model/FundsModel");
 
-const GsecSchema = new mongoose.Schema({
-  name: { type: String, required: true },           // "7.24% GS 2055"
-  type: { type: String, default: "GSEC" },
+exports.placeBid = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { gsecId, bidYield, investmentAmount } = req.body;
 
-  couponRate: { type: Number, required: true },     // 7.24
-  indicativeYield: { type: Number, required: true },// 7.40 (list me dikhane ke liye)
+    const gsec = await Gsec.findById(gsecId);
+    if (!gsec || gsec.status !== "OPEN") {
+      return res.status(400).json({ message: "Bidding closed" });
+    }
 
-  pricePerUnit: { type: Number, required: true },   // ₹106
-  maturityDate: { type: Date, required: true },     // 06 Oct 2035
+    if (investmentAmount < gsec.minInvestment) {
+      return res.status(400).json({ message: "Below minimum investment" });
+    }
 
-  minInvestment: { type: Number, required: true },  // ₹1000 etc
-  biddingEndDate: { type: Date, required: true },
+    const units = Math.floor(investmentAmount / gsec.pricePerUnit);
 
-  status: { 
-    type: String, 
-    enum: ["OPEN", "CLOSED"], 
-    default: "OPEN" 
+    const funds = await FundsModel.findOneAndUpdate(
+      { userId, type: "EQUITY", availableCash: { $gte: investmentAmount } },
+      { $inc: { availableCash: -investmentAmount, usedMargin: investmentAmount } },
+      { new: true }
+    );
+
+    if (!funds) return res.status(400).json({ message: "Insufficient funds" });
+
+    const bid = await GsecApplication.create({
+      userId,
+      gsecId,
+      bidYield,
+      investmentAmount,
+      unitsApplied: units
+    });
+
+    res.status(201).json({ message: "Bid placed", bid });
+
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
   }
-
-}, { timestamps: true });
-
-module.exports = GsecSchema;
+};
