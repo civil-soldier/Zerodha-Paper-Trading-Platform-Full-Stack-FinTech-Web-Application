@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 const MIN_QTY = 100;
 
-const GsecBidModal = ({ bond, onClose }) => {
+const GsecBidModal = ({ bond, onClose, refreshFunds }) => {
   const [amount, setAmount] = useState(bond.pricePerUnit * MIN_QTY);
   const [qty, setQty] = useState(MIN_QTY);
   const [loading, setLoading] = useState(false);
@@ -18,40 +18,27 @@ const GsecBidModal = ({ bond, onClose }) => {
   }, [amount, bond.pricePerUnit]);
 
   const handleBid = async () => {
-    if (qty < MIN_QTY) {
-      toast.error("Minimum 100 units required");
-      return;
-    }
-
     try {
-      setLoading(true);
-
-      const res = await fetch(
-        "https://zerodha-papertradingplatform.onrender.com/api/gsecs/bid",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({
-            gsecId: bond._id,
-            bidYield: bond.indicativeYield,
-            investmentAmount: qty * bond.pricePerUnit,
-          }),
-        }
-      );
+      const res = await fetch("https://zerodha-papertradingplatform.onrender.com/api/gsecs/bid", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          gsecId: bond._id,
+          investmentAmount: amount,
+        }),
+      });
 
       const data = await res.json();
-
       if (!res.ok) throw new Error(data.message);
 
-      toast.success("Bid placed successfully 🎉");
+      toast.success("Bid placed successfully");
+      refreshFunds();   // IPO-style update
       onClose();
     } catch (err) {
-      toast.error(err.message || "Bid failed");
-    } finally {
-      setLoading(false);
+      toast.error(err.message);
     }
   };
 
@@ -106,7 +93,7 @@ const GsecBidModal = ({ bond, onClose }) => {
           <button className="btn-primary" onClick={handleBid} disabled={loading}>
             {loading ? "Placing..." : "Place Bid"}
           </button>
-          <button className="btn-secondary" onClick={onClose}>
+          <button className="btn-secondary" onClick={onClose} >
             Cancel
           </button>
         </div>

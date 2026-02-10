@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import GsecBidModal from "./GsecBidModal";
 
-const GovtSecuritiesList = ({ search }) => {
+const GovtSecuritiesList = ({ search, refreshFunds }) => {
   const [gsecs, setGsecs] = useState([]);
   const [selectedGsec, setSelectedGsec] = useState(null);
 
@@ -56,6 +56,7 @@ const GovtSecuritiesList = ({ search }) => {
         <GsecBidModal
           bond={selectedGsec}
           onClose={() => setSelectedGsec(null)}
+          refreshFunds={refreshFunds}
         />
       )}
     </>

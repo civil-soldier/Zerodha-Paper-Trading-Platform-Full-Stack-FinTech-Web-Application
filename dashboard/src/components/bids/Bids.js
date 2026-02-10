@@ -14,6 +14,14 @@ const Bids = () => {
   const [activeTab, setActiveTab] = useState("ipo");
   const [search, setSearch] = useState("");
 
+  const fetchFunds = async () => {
+    const token = localStorage.getItem("token");
+
+    await fetch(`${process.env.REACT_APP_API_URL}/api/funds`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  };
+
   return (
     <div className="data-card">
       <h1 className="bids-title">Bids</h1>
@@ -46,8 +54,8 @@ const Bids = () => {
       </div>
 
       <div className="table-card">
-        {activeTab === "ipo" && <IpoList search={search} />}
-        {activeTab === "govt" && <GovtSecuritiesList search={search} />}
+        {activeTab === "ipo" && <IpoList search={search} refreshFunds={fetchFunds} />}
+        {activeTab === "govt" && <GovtSecuritiesList search={search} refreshFunds={fetchFunds} />}
 
         {activeTab === "auctions" && (
           <EmptyState title="There are no stocks for auctions yet." />
