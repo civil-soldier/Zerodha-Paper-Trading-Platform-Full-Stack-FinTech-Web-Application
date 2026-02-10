@@ -27,7 +27,7 @@ const GsecBidModal = ({ bond, onClose }) => {
       setLoading(true);
 
       const res = await fetch(
-        "https://zerodha-papertradingplatform.onrender.com/api/gsec/bid",
+        "https://zerodha-papertradingplatform.onrender.com/api/gsecs/bid",
         {
           method: "POST",
           headers: {
