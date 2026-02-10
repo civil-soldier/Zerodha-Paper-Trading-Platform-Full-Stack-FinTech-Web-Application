@@ -23,7 +23,7 @@ const GsecBidModal = ({ bond, onClose, refreshFunds }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           gsecId: bond._id,
