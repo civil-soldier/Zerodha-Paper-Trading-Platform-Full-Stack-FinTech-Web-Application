@@ -6,7 +6,7 @@ const GovtSecuritiesList = ({ search }) => {
   const [selectedGsec, setSelectedGsec] = useState(null);
 
   useEffect(() => {
-    fetch("https://zerodha-papertradingplatform.onrender.com/api/gsec/all")
+    fetch("https://zerodha-papertradingplatform.onrender.com/api/gsecs/all")
       .then(res => res.json())
       .then(data => setGsecs(data))
       .catch(err => console.error("GSEC fetch error:", err));
