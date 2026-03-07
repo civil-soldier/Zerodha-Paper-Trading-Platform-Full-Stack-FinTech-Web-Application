@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import api from "../../api/api";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,6 @@ const CredentialsPage = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const guardRan = useRef(false); //  ADD THIS
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
