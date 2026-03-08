@@ -297,7 +297,7 @@ const forgotPassword = async (req, res) => {
     user.resetPasswordExpiry = Date.now() + 15 * 60 * 1000;
     await user.save();
 
-    const resetLink = `https://zerodha-paper-trading-platform.vercel.app/reset-password/${resetToken}`;
+    const resetLink = `https://arthiq-paper-trading-platform-51xh.vercel.app/reset-password/${resetToken}`;
     await sendEmail(user.email, resetLink);
 
     res.json({ message: "Password reset link sent to email" });

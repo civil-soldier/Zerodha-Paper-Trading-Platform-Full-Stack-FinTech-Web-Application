@@ -26,7 +26,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
-  "https://zerodha-paper-trading-platform.vercel.app",
+  "https://arthiq-paper-trading-platform-51xh.vercel.app",
 ];
 
 app.use(cors({
