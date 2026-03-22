@@ -589,6 +589,10 @@ app.get("/live-prices", (req, res) => {
   res.json(livePrices);
 });
 
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
+
 mongoose
   .connect(uri)
   .then(() => {
