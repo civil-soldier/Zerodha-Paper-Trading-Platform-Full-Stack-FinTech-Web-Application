@@ -103,17 +103,10 @@ const handleLogin = async () => {
       {/* Disclaimer */}
       <div className="disclaimer">
         <p>
-          Arthiq Broking Limited: Member of{" "}
-          <a href="https://www.nseindia.com/">NSE</a>,{" "}
-          <a href="https://www.bseindia.com/">BSE</a>,{" "}
-          <a href="https://www.mcxindia.com/">MCX</a> ‐ SEBI Reg. no.
-        </p>
-        <p>
-          INZ000031633 | <a href="https://www.zerodha.com/cdsl">CDSL</a> ‐{" "}
-          <a href="https://www.sebi.gov.in/">SEBI</a> Reg. no. IN-DP-431-2019
+          Arthiq Broking Limited
         </p>
         <br />
-        <p className="version">v3.0.0</p>
+        <p className="version">v1.0.0</p>
         <p
           style={{
             marginTop: "8px",

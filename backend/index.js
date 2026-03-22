@@ -26,14 +26,11 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
-  "https://arthiq-paper-trading-platform-51xh.vercel.app",
+  "https://arthiq-paper-trading-platform-28xr.vercel.app",
 ];
 
 app.use(cors({
-  origin: [
-    "https://arthiq-paper-trading-platform-28xr.vercel.app",
-    "https://zerodha-paper-trading-platform.vercel.app/"
-  ],
+  origin: true,
   credentials: true,
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"]

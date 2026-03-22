@@ -82,10 +82,9 @@ const handleSubmit = async () => {
       </div>
 
       <div className="disclaimer">
-        <p>Arthiq Broking Limited: Member of NSE, BSE, MCX ‐ SEBI Reg. no.</p>
-        <p>INZ000031633 | CDSL ‐ SEBI Reg. no. IN-DP-431-2019</p>
+        <p>Arthiq Broking Limited</p>
         <br />
-        <p className="version">v3.0.0</p>
+        <p className="version">v1.0.0</p>
         <p
           style={{
             marginTop: "8px",
