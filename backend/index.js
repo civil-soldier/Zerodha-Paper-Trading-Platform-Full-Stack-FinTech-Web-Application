@@ -30,7 +30,9 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-  origin: true,        // allow all origins dynamically
+  origin: [
+    "https://arthiq-paper-trading-platform-28xr.vercel.app"
+  ],
   credentials: true,
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"]
