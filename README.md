@@ -12,7 +12,7 @@ ArthiQ is a full-stack paper trading platform that allows users to simulate stoc
 
 ## 🎥 Demo Video
 
-[![ArthiQ - Paper Trading Platform Demo](https://i9.ytimg.com/vi_webp/XIyBg6d9JFs/mq2.webp?sqp=CPT68s4G-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEogWShlMA8=&rs=AOn4CLB84woJCnyjxFms-bylrNuEVXWMrw)](https://youtu.be/XIyBg6d9JFs)
+[![ArthiQ - Paper Trading Platform Demo](https://i9.ytimg.com/vi_webp/XIyBg6d9JFs/mqdefault.webp?v=69dcc485&sqp=CPyI884G&rs=AOn4CLB79amMtvnOHZy9iMopLkt1YmfzGQ)](https://youtu.be/XIyBg6d9JFs)
 
 > Click the thumbnail above to watch the demo on YouTube
 
