@@ -9,36 +9,41 @@ function Navbar() {
         .zerodha-nav {
   background-color: #161625 !important;
   border-bottom: 1px solid #2a2a3d;
-  height: 68px;
+  height: auto;
+  min-height: 60px;
   font-family: "Inter", sans-serif;
   box-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
-
   position: sticky;
   top: 0;
   z-index: 3000;
+  width: 100%;
+  padding: 8px 0;
 }
 
 .zerodha-container {
-  max-width: 1200px;
+  max-width: 100%;
   width: 100%;
-  margin: 0 auto;                /* ensure proper centering */
+  margin: 0 auto;
   align-items: center;
-  padding: 0 12px;               /* symmetric padding */
+  padding: 0 12px;
+  display: flex;
 }
 
-/* Scoped nav link styling to avoid bootstrap override */
 .zerodha-nav .nav-link {
   color: #b8b8d6 !important;
-  font-weight: 400 !important;   /* force normal */
-  font-size: 16px;
+  font-weight: 400 !important;
+  font-size: clamp(12px, 2vw, 16px);
   letter-spacing: 0.2px;
   transition: color 0.2s ease;
   display: flex;
   align-items: center;
-  height: 68px;
+  height: auto;
+  min-height: 44px;
   text-decoration: none;
+  padding: 0 8px;
+  white-space: nowrap;
 }
 
 .zerodha-nav .nav-link:hover {
@@ -46,29 +51,74 @@ function Navbar() {
 }
 
 .navbar-brand img {
-  width: 120px;
+  width: clamp(80px, 20vw, 140px);
+  height: auto;
   margin-left: 0;
 }
 
 .navbar-nav {
-  gap: 22px;
+  gap: clamp(12px, 2vw, 22px);
+  display: flex;
+  align-items: center;
 }
 
 .navbar-toggler {
-  height: 68px;
+  height: auto;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
+  background: none;
+  padding: 8px;
 }
 
 .navbar-toggler i {
-  font-size: 22px;
+  font-size: clamp(16px, 4vw, 24px);
   color: #a78bfa;
 }
 
 .nav-link.dropdown-toggle::after {
   display: none !important;
+}
+
+/* Mobile Navbar Fix */
+@media (max-width: 991px) {
+  .zerodha-nav {
+    padding: 0;
+    height: auto;
+  }
+
+  .navbar-brand img {
+    width: 100px;
+  }
+
+  .navbar-nav {
+    gap: 8px;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .zerodha-nav {
+    padding: 6px 0;
+    min-height: 56px;
+  }
+
+  .navbar-brand img {
+    width: 90px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    min-height: 40px;
+    padding: 0 6px;
+  }
+
+  .navbar-nav {
+    gap: 6px;
+  }
+}
 }
         }
       `}</style>
