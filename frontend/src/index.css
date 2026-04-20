@@ -3464,3 +3464,802 @@ hr,
   align-items: center;
   justify-content: space-between;
 }
+
+/* ================================================== */
+/* 📱 MOBILE RESPONSIVE OVERRIDES                     */
+/* Paste this at the bottom of your main CSS file     */
+/* ================================================== */
+
+
+/* -------------------------------------------------- */
+/* TABLET  ≤ 992px                                    */
+/* -------------------------------------------------- */
+@media (max-width: 992px) {
+
+  /* --- Navbar --- */
+  .zerodha-nav .navbar-collapse {
+    background-color: #161625;
+    padding: 12px 16px 20px;
+    border-top: 1px solid #2a2a3d;
+  }
+
+  .zerodha-nav .navbar-nav {
+    gap: 4px;
+  }
+
+  .zerodha-nav .nav-link {
+    height: auto !important;
+    padding: 10px 8px !important;
+  }
+
+  /* --- Products page --- */
+  .product-card,
+  .product-card.reverse {
+    flex-direction: column !important;
+    gap: 30px;
+    margin-bottom: 60px;
+  }
+
+  .product-card img {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* --- Community sections --- */
+  .community-section,
+  .community-section.reverse {
+    flex-direction: column !important;
+    gap: 40px;
+  }
+
+  .community-image img {
+    max-width: 100%;
+  }
+
+  /* --- Universe grid: 2 columns on tablet --- */
+  .universe-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  /* --- Varsity card --- */
+  .varsity-card {
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px;
+  }
+
+  .varsity-left {
+    max-width: 100%;
+  }
+
+  .varsity-right {
+    position: static;
+    transform: none;
+    margin-top: 0;
+  }
+
+  .varsity-illustration {
+    width: 180px;
+  }
+
+  /* --- Account card --- */
+  .account-card {
+    flex-direction: column;
+    gap: 30px;
+    padding: 36px 28px;
+    text-align: center;
+  }
+
+  .card-left {
+    max-width: 100%;
+  }
+
+  .login-btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .card-right img {
+    max-width: 200px;
+  }
+
+  /* --- Signup container --- */
+  .signup-container {
+    flex-direction: column;
+  }
+
+  .signup-left {
+    padding: 30px 20px;
+  }
+
+  .signup-right {
+    padding: 40px 28px;
+  }
+
+  /* --- Steps & Benefits sections --- */
+  .steps-section .row,
+  .benefits-section .row {
+    flex-direction: column;
+  }
+
+  .steps-image-wrapper,
+  .benefits-image-wrapper {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  /* --- Pricing wrapper glow --- */
+  .pricing-wrapper::before {
+    width: 100%;
+    left: 50%;
+  }
+
+}
+
+
+/* -------------------------------------------------- */
+/* MOBILE  ≤ 768px                                    */
+/* -------------------------------------------------- */
+@media (max-width: 768px) {
+
+  /* --- Global spacing --- */
+  body {
+    font-size: 15px;
+  }
+
+  /* --- Hero section --- */
+  .hero-section {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+    text-align: center;
+  }
+
+  .hero-wrapper {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .hero-wrapper::before {
+    width: 100%;
+  }
+
+  .hero-section h1 {
+    font-size: 28px !important;
+  }
+
+  .hero-section p {
+    font-size: 15px !important;
+  }
+
+  .hero-image {
+    max-width: 100% !important;
+    max-height: none !important;
+    margin-top: 30px;
+  }
+
+  /* --- Typography scale-down --- */
+  h1 { font-size: 26px !important; }
+  h2 { font-size: 22px !important; }
+  h3 { font-size: 19px !important; }
+
+  .products-hero h1,
+  .community-text h1 {
+    font-size: 30px !important;
+  }
+
+  .community-text h2 {
+    font-size: 24px !important;
+  }
+
+  .pricing-title {
+    font-size: 26px !important;
+  }
+
+  .signup-hero h1 {
+    font-size: 30px !important;
+  }
+
+  /* --- Products wrapper --- */
+  .products-wrapper {
+    padding: 60px 16px;
+  }
+
+  .products-hero {
+    margin-bottom: 60px;
+    text-align: center;
+  }
+
+  .products-hero p {
+    font-size: 15px;
+    margin-bottom: 40px;
+  }
+
+  /* --- Community wrapper --- */
+  .community-wrapper {
+    padding: 60px 16px;
+  }
+
+  .community-hero {
+    margin-bottom: 60px;
+  }
+
+  .community-section {
+    margin-bottom: 60px;
+    gap: 30px;
+  }
+
+  .community-text p {
+    font-size: 15px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .glow-button {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+
+  /* --- Universe grid: 1 column on mobile --- */
+  .universe-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .universe-section,
+  .varsity-section {
+    margin-top: 50px;
+    padding: 0 16px;
+  }
+
+  .universe-title,
+  .varsity-title {
+    font-size: 22px !important;
+  }
+
+  /* --- Varsity card --- */
+  .varsity-card {
+    padding: 24px 20px;
+    margin: 40px 16px;
+    text-align: center;
+  }
+
+  /* --- Account card --- */
+  .account-card {
+    margin: 30px 16px;
+    padding: 28px 20px;
+    border-radius: 12px;
+  }
+
+  .card-left h1 {
+    font-size: 24px !important;
+  }
+
+  /* --- Content section --- */
+  .content-section {
+    padding: 30px 16px;
+  }
+
+  /* --- Account header --- */
+  .account-header {
+    padding: 0 16px;
+    padding-right: 16px !important;
+  }
+
+  /* --- Signup --- */
+  .signup-wrapper {
+    padding: 0 12px 60px;
+  }
+
+  .signup-container {
+    border-radius: 12px;
+  }
+
+  .signup-right {
+    padding: 30px 20px;
+  }
+
+  .signup-hero {
+    padding: 50px 16px 30px;
+  }
+
+  .signup-hero p {
+    font-size: 15px;
+  }
+
+  .signup-card {
+    padding: 24px 18px;
+  }
+
+  /* --- Phone input --- */
+  .phone-wrapper {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  /* --- Pricing section --- */
+  .pricing-wrapper {
+    padding: 60px 0;
+  }
+
+  .pricing-container {
+    margin: 40px 16px;
+    overflow-x: auto;
+  }
+
+  .pricing-table {
+    min-width: 480px; /* allow horizontal scroll on very small screens */
+  }
+
+  .pricing-subtext {
+    font-size: 15px;
+  }
+
+  .tabs {
+    gap: 16px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 4px;
+  }
+
+  .pricing-image {
+    max-width: 100%;
+    margin-bottom: -20px;
+  }
+
+  /* --- Charges explained --- */
+  .charges-explained {
+    grid-template-columns: 1fr !important;
+    gap: 30px;
+  }
+
+  /* --- Support page --- */
+  .support-hero {
+    padding: 30px 0 20px;
+  }
+
+  .support-hero-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  .support-hero-header h1 {
+    font-size: 24px;
+  }
+
+  .support-search-box {
+    padding: 0 16px;
+  }
+
+  .support-search-box input {
+    font-size: 15px;
+    padding: 14px 14px 14px 44px;
+  }
+
+  .support-content-wrapper {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    padding: 0 16px;
+    gap: 24px;
+  }
+
+  .scroll-box {
+    max-height: unset !important;
+  }
+
+  /* --- Details / credentials cards --- */
+  .details-wrapper {
+    padding: 30px 16px;
+  }
+
+  .details-card {
+    padding: 24px 18px;
+    border-radius: 6px;
+  }
+
+  .details-card h1 {
+    font-size: 22px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .credentials-wrapper {
+    padding: 30px 16px;
+  }
+
+  .credentials-card {
+    width: 100% !important;
+    padding: 28px 20px;
+  }
+
+  /* --- Stepper --- */
+  .stepper {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .step {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .line {
+    min-width: 20px;
+    flex: 1;
+  }
+
+  /* --- Steps section --- */
+  .steps-section {
+    margin: 60px auto;
+    padding: 0 16px;
+  }
+
+  .steps-title {
+    font-size: 22px;
+  }
+
+  .step-text {
+    font-size: 15px;
+  }
+
+  /* --- Benefits section --- */
+  .benefits-section {
+    padding: 60px 16px;
+  }
+
+  .benefits-title {
+    font-size: 20px !important;
+  }
+
+  .benefit-item h4 {
+    font-size: 16px !important;
+  }
+
+  .benefit-item p {
+    font-size: 14px !important;
+  }
+
+  /* --- Types/cards section --- */
+  .types-section {
+    margin: 60px 16px;
+  }
+
+  .types-title {
+    font-size: 22px;
+  }
+
+  /* --- FAQ section --- */
+  .faq-section {
+    margin: 60px 16px;
+  }
+
+  .faq-question {
+    font-size: 15px;
+  }
+
+  /* --- Email auth --- */
+  .email-auth {
+    margin: 40px 16px;
+  }
+
+  .email-title {
+    font-size: 22px;
+  }
+
+  .email-illustration,
+  .otp-image {
+    max-width: 100% !important;
+  }
+
+  .email-image-wrapper,
+  .otp-image-wrapper {
+    padding: 16px;
+    width: 100%;
+  }
+
+  /* --- Team members --- */
+  .team-members .member img {
+    width: 160px;
+    height: 160px;
+  }
+
+  /* --- Section titles --- */
+  .section-title {
+    font-size: 20px;
+  }
+
+}
+
+
+/* -------------------------------------------------- */
+/* SMALL MOBILE  ≤ 480px                              */
+/* -------------------------------------------------- */
+@media (max-width: 480px) {
+
+  .hero-section h1 {
+    font-size: 24px !important;
+  }
+
+  .community-text h1 {
+    font-size: 26px !important;
+  }
+
+  .signup-hero h1 {
+    font-size: 26px !important;
+  }
+
+  .universe-card {
+    height: auto !important;
+    padding: 22px 18px;
+  }
+
+  .account-card {
+    padding: 22px 16px;
+  }
+
+  .varsity-card {
+    padding: 20px 16px;
+  }
+
+  /* Stack stepper vertically on very small screens */
+  .stepper {
+    display: grid;
+    grid-template-columns: repeat(2, auto) 1fr;
+    justify-content: start;
+    row-gap: 10px;
+  }
+
+  .step-number {
+    width: 38px;
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .pricing-container {
+    margin: 30px 12px;
+  }
+
+}
+
+/* ================================================== */
+/* Hero & About page component classes                */
+/* Add these after your existing responsive overrides */
+/* ================================================== */
+
+/* Hero heading */
+.hero-heading {
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.4;
+}
+
+/* About page body row */
+.about-body-row {
+  line-height: 1.8;
+  font-size: 1rem; /* never use 4em — that was the bug */
+}
+
+/* Team section */
+.team-heading {
+  font-weight: 500;
+  font-size: 25px;
+}
+
+.team-body-row {
+  line-height: 1.8;
+}
+
+.team-photo-col {
+  margin-top: 5px;
+}
+
+.team-member-photo {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.team-member-name {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.team-member-role {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.team-bio-col {
+  margin-top: 10px;
+}
+
+/* -------------------------------------------------- */
+/* Mobile overrides for Hero & Team                   */
+/* -------------------------------------------------- */
+@media (max-width: 768px) {
+
+  .hero-heading {
+    font-size: 22px !important;
+  }
+
+  .about-body-row {
+    font-size: 0.95rem;
+  }
+
+  .team-member-photo {
+    width: 180px;
+    height: 180px;
+  }
+
+  .team-member-name {
+    font-size: 18px;
+  }
+
+  .team-bio-col {
+    text-align: center;
+    padding: 0 8px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .hero-heading {
+    font-size: 20px !important;
+  }
+
+  .team-member-photo {
+    width: 140px;
+    height: 140px;
+  }
+
+}
+
+/* ================================================== */
+/* Community page fixes — append to index.css         */
+/* ================================================== */
+
+/* Images in community sections fill their container */
+.community-image {
+  flex-shrink: 0;
+}
+
+.community-image img {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  display: block;
+}
+
+/* Hero section: text only, centered on mobile */
+.community-hero-section {
+  justify-content: center;
+}
+
+/* Feature blocks spacing */
+.feature-block h4 {
+  color: #ffffff;
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.feature-block p {
+  color: #9ca3af;
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+/* Disclaimer */
+.disclaimer h4 {
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* -------------------------------------------------- */
+/* Community mobile overrides                         */
+/* -------------------------------------------------- */
+@media (max-width: 768px) {
+
+  .community-wrapper {
+    padding: 50px 16px 60px;
+  }
+
+  .community-hero {
+    margin-bottom: 50px;
+  }
+
+  /* Stack all community sections vertically */
+  .community-section,
+  .community-section.reverse {
+    flex-direction: column !important;
+    gap: 30px !important;
+    margin-bottom: 50px;
+    align-items: flex-start;
+  }
+
+  /* Full width text block */
+  .community-text {
+    width: 100%;
+  }
+
+  .community-text h1 {
+    font-size: 26px !important;
+  }
+
+  .community-text h2 {
+    font-size: 22px !important;
+  }
+
+  .community-text p {
+    font-size: 15px !important;
+  }
+
+  /* Images go full width */
+  .community-image {
+    width: 100%;
+  }
+
+  .community-image img {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* CTA buttons stack */
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .glow-button {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    display: block;
+  }
+
+  .disclaimer {
+    margin-bottom: 50px;
+    padding: 20px;
+  }
+
+  .community-cta h2 {
+    font-size: 22px !important;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .community-wrapper {
+    padding: 40px 14px 50px;
+  }
+
+  .community-text h1 {
+    font-size: 22px !important;
+  }
+
+  .community-text h2 {
+    font-size: 19px !important;
+  }
+
+  .feature-block h4 {
+    font-size: 15px;
+  }
+
+  .feature-block p {
+    font-size: 14px;
+  }
+
+}

@@ -3,58 +3,48 @@ import React from "react";
 function Team() {
   return (
     <div className="container hero-section">
+
       {/* Heading */}
-      <div className="row mb-5 text-center d-flex flex-column align-items-center">
-        <h1 className="mt-2" style={{ fontWeight: 500, fontSize: "25px" }}>
-          People
-        </h1>
+      <div className="row mb-4 text-center d-flex flex-column align-items-center">
+        <h1 className="mt-2 team-heading">People</h1>
       </div>
 
       {/* 2 Column Section */}
-      <div
-        className="row text-muted fs-6"
-        style={{ lineHeight: "1.8" }}
-      >
-        {/* LEFT COLUMN */}
-        <div
-          className="col-6"
-          style={{ textAlign: "center", marginTop: "5px" }}
-        >
+      <div className="row text-muted team-body-row">
+
+        {/* LEFT COLUMN — photo + name */}
+        <div className="col-12 col-md-5 text-center mb-4 mb-md-0 team-photo-col">
           <img
             src="/media/images/Yash1.png"
             alt="Yash Kumar"
-            style={{ width: "300px", borderRadius: "100%", height: "300px" }}
+            className="team-member-photo"
           />
-          <h3 style={{ marginTop: "10px", fontSize: "20px" }}>
-            Yash Kumar
-          </h3>
-          <p>Founder & CEO</p>
+          <h3 className="team-member-name">Yash Kumar</h3>
+          <p className="team-member-role">Founder &amp; CEO</p>
         </div>
 
-        {/* RIGHT COLUMN */}
-        <div className="col-6" style={{ marginTop: "25px" }}>
+        {/* RIGHT COLUMN — bio */}
+        <div className="col-12 col-md-7 team-bio-col">
           <p>
-  Yash founded Arthiq as a full-stack fintech project focused on
-  real-time paper trading simulation.
-</p>
-
-<p>
-  With a background in Electronics & Communication and a strong
-  interest in software development, he enjoys building scalable,
-  production-ready systems.
-</p>
-
-<p>
-  This project includes authentication flows, dashboard analytics,
-  protected routes, API integration, and deployment on modern
-  cloud infrastructure.
-</p>
-
-<p>
-  Outside of coding, he enjoys basketball and exploring new
-  product ideas in the fintech space.
-</p>
+            Yash founded Arthiq as a full-stack fintech project focused on
+            real-time paper trading simulation.
+          </p>
+          <p>
+            With a background in Electronics &amp; Communication and a strong
+            interest in software development, he enjoys building scalable,
+            production-ready systems.
+          </p>
+          <p>
+            This project includes authentication flows, dashboard analytics,
+            protected routes, API integration, and deployment on modern
+            cloud infrastructure.
+          </p>
+          <p>
+            Outside of coding, he enjoys basketball and exploring new
+            product ideas in the fintech space.
+          </p>
         </div>
+
       </div>
     </div>
   );

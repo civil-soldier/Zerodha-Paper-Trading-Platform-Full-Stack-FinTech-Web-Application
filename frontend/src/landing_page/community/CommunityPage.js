@@ -7,23 +7,19 @@ function CommunityPage() {
 
       {/* ================= HERO SECTION ================= */}
       <div className="community-hero">
-        <div className="community-section">
+        <div className="community-section community-hero-section">
 
           {/* LEFT TEXT */}
           <div className="community-text">
             <span className="community-badge">🌍 Community First</span>
-
             <h1>Free. Open. Built for learners.</h1>
-
             <p>
-              Arthiq is a free and community-driven paper trading platform 
-              designed to help students and aspiring traders learn the markets 
+              Arthiq is a free and community-driven paper trading platform
+              designed to help students and aspiring traders learn the markets
               without financial risk.
             </p>
           </div>
 
-          {/* RIGHT IMAGE */}
-          
         </div>
       </div>
 
@@ -55,10 +51,7 @@ function CommunityPage() {
         </div>
 
         <div className="community-image">
-          <img
-            src="/media/images/community-free.svg"
-            alt="Why Free"
-          />
+          <img src="/media/images/community-free.svg" alt="Why Free" />
         </div>
       </div>
 
@@ -90,10 +83,7 @@ function CommunityPage() {
         </div>
 
         <div className="community-image">
-          <img
-            src="/media/images/community-dev.svg"
-            alt="Community Developers"
-          />
+          <img src="/media/images/community-dev.svg" alt="Community Developers" />
         </div>
       </div>
 
