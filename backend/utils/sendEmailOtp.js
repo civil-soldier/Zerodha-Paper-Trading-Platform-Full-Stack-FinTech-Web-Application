@@ -18,9 +18,12 @@ const sendEmailOtp = async (email, otp) => {
       `,
     });
 
-    console.log("✅ OTP sent:", data.id);
+    console.log("📨 FULL RESEND RESPONSE:");
+    console.log(JSON.stringify(data, null, 2));
+
   } catch (err) {
-    console.error("❌ RESEND OTP FAILED:", err);
+    console.error("❌ RESEND OTP FAILED:");
+    console.error(err);
     throw err;
   }
 };
